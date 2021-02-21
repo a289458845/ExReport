@@ -1,0 +1,6 @@
+framework module ExReport {
+  umbrella header "ExReport-umbrella.h"
+
+  export *
+  module * { export * }
+}

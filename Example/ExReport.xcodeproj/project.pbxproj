@@ -60,11 +60,11 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		774F93148C516517E31F684A /* Pods_ExReport_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExReport_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		90A19D57B1F64FC91E9BAC96 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		90A19D57B1F64FC91E9BAC96 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		9868E1C4FED0785C15B38611 /* Pods-ExReport_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExReport_Example.debug.xcconfig"; path = "Target Support Files/Pods-ExReport_Example/Pods-ExReport_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		B3889F3C0869DBD23ACAFD76 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		B3889F3C0869DBD23ACAFD76 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C4383246FB23320C94F59077 /* Pods-ExReport_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExReport_Example.release.xcconfig"; path = "Target Support Files/Pods-ExReport_Example/Pods-ExReport_Example.release.xcconfig"; sourceTree = "<group>"; };
-		E73A6E0DB72A85B4573F5F4E /* ExReport.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = ExReport.podspec; path = ../ExReport.podspec; sourceTree = "<group>"; };
+		E73A6E0DB72A85B4573F5F4E /* ExReport.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ExReport.podspec; path = ../ExReport.podspec; sourceTree = "<group>"; };
 		E8E5CE11ADD28CA73A75F65B /* Pods_ExReport_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExReport_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEF4FC939E22C8740FEB773D /* Pods-ExReport_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExReport_Tests.release.xcconfig"; path = "Target Support Files/Pods-ExReport_Tests/Pods-ExReport_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,7 +103,6 @@
 				29737043E5242F46438F88EF /* Pods-ExReport_Tests.debug.xcconfig */,
 				FEF4FC939E22C8740FEB773D /* Pods-ExReport_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -249,6 +248,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = a289458845;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 39XEX8C6ZD;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -259,6 +261,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -513,6 +516,7 @@
 			baseConfigurationReference = 9868E1C4FED0785C15B38611 /* Pods-ExReport_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 39XEX8C6ZD;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExReport/ExReport-Prefix.pch";
 				INFOPLIST_FILE = "ExReport/ExReport-Info.plist";
@@ -529,6 +533,7 @@
 			baseConfigurationReference = C4383246FB23320C94F59077 /* Pods-ExReport_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 39XEX8C6ZD;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExReport/ExReport-Prefix.pch";
 				INFOPLIST_FILE = "ExReport/ExReport-Info.plist";

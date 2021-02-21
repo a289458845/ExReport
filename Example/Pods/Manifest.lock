@@ -1,0 +1,27 @@
+PODS:
+  - ExReport (0.1.0)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+
+DEPENDENCIES:
+  - ExReport (from `../`)
+  - FBSnapshotTestCase
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  ExReport:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ExReport: fb41ba8e78f68f33872cbf34aeaa06459b8c2247
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+
+PODFILE CHECKSUM: 833ae7c76fb4d4515791dc09acecfae957913c31
+
+COCOAPODS: 1.10.0
