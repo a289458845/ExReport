@@ -1,7 +1,7 @@
 {
   "name": "ExReport",
   "version": "0.1.0",
-  "summary": "A short description of ExReport.",
+  "summary": "统计报表组件",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/a289458845/ExReport",
   "license": {
@@ -18,5 +18,32 @@
   "platforms": {
     "ios": "9.0"
   },
-  "source_files": "ExReport/Classes/**/*"
+  "source_files": "ExReport/Classes/**/*",
+  "resource_bundles": {
+    "ExReport": [
+      "ExReport/Assets/*.png",
+      "ExReport/Assets/*"
+    ]
+  },
+  "prefix_header_contents": "#import \"ExReport.h\"",
+  "dependencies": {
+    "ExNetwork": [
+
+    ],
+    "SDWebImage": [
+      "~> 4.2.2"
+    ],
+    "Masonry": [
+
+    ],
+    "MJExtension": [
+      "~> 3.0.17"
+    ],
+    "MJRefresh": [
+      "~> 3.2.0"
+    ],
+    "MBProgressHUD": [
+      "~> 1.1.0"
+    ]
+  }
 }

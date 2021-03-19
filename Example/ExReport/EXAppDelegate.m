@@ -7,12 +7,17 @@
 //
 
 #import "EXAppDelegate.h"
-
+#import <ExService.h>
 @implementation EXAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+http://api2.ztc.comlbs.com 44D1AA4E6E204BBE9BB17CE5C2E95FCB
+//http://120.221.95.146:10001  8761051B4D8D47A5A02213330F13BC54
+    [ExService manager].baseUrl = @"http://api2.ztc.comlbs.com";
+    [ExService manager].token = @"44D1AA4E6E204BBE9BB17CE5C2E95FCB";
+    [[ExService manager] getReginData];
     return YES;
 }
 

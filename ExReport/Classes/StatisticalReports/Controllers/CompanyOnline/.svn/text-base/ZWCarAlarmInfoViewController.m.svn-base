@@ -1,0 +1,306 @@
+//
+//  ZWCarAlarmInfoViewController.m
+//  Muck
+//
+//  Created by 张威 on 2018/8/1.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWCarAlarmInfoViewController.h"
+#import "ZWCarAlarmInfoTableViewCell.h"
+#import "ZWCarAlarmInfoHeaderView.h"
+#import "ZWStatuesTool.h"
+#import "ZWAlarmDayDataModel.h"
+#import "ZWAlermTypeListDataModel.h"
+#import "ZWCarAlarmInfoTableSectionHeaderView.h"
+
+
+#import "ZWAlarmMapInfoViewController.h"
+
+#import "ZWSelectedTimeView.h"
+#import "LDSelectDateView.h"
+#import "ZWSelectAlarmTimeView.h"
+
+@interface ZWCarAlarmInfoViewController ()
+<UITableViewDataSource,
+UITableViewDelegate,
+ZWCarAlarmInfoHeaderViewDelegate>
+
+@property (strong, nonatomic) ZWSelectAlarmTimeView *selectAlarmTimeView;
+@property (strong, nonatomic) LDSelectDateView *beginDateView;
+@property (strong, nonatomic) LDSelectDateView *endDateView;
+@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic)ZWCarAlarmInfoHeaderView *headerView;
+@property (strong, nonatomic)NSMutableArray *titleArray;
+@property (strong, nonatomic)NSMutableArray *valueArray;
+@property (strong, nonatomic)NSMutableArray *dataArray;
+@property (nonatomic, strong) ZWAlarmStatues *statues;//假数据模型
+@property(assign, nonatomic)NSInteger TypeId;
+@property (copy, nonatomic)NSString *StartDateTime;
+@property (copy, nonatomic)NSString *EndDateTime;
+@property(copy, nonatomic)NSString *endTimeString;
+
+
+@end
+
+@implementation ZWCarAlarmInfoViewController
+- (NSString *)getCurrentTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    return dateTime;
+}
+
+- (LDSelectDateView *)beginDateView{
+    Kweaself
+    if (!_beginDateView) {
+        _beginDateView = [[LDSelectDateView alloc]init];
+        _beginDateView.confirmAction = ^(NSString *dateStr) {
+            weakSelf.StartDateTime = dateStr;
+            weakSelf.selectAlarmTimeView.beginTime = dateStr;
+            [weakSelf.selectAlarmTimeView.tableView reloadData];
+        };
+        [self.view addSubview:_beginDateView];
+    }
+    return _beginDateView;
+}
+- (LDSelectDateView *)endDateView{
+    Kweaself
+    if (!_endDateView) {
+        _endDateView = [[LDSelectDateView alloc]init];
+        _endDateView.confirmAction = ^(NSString *dateStr) {
+            weakSelf.EndDateTime = dateStr;
+            weakSelf.selectAlarmTimeView.endTime = dateStr;
+            [weakSelf.selectAlarmTimeView.tableView reloadData];
+        };
+        [self.view addSubview:_endDateView];
+    }
+    return _endDateView;
+}
+
+- (ZWSelectAlarmTimeView *)selectAlarmTimeView{
+    Kweaself
+    if (!_selectAlarmTimeView) {
+        _selectAlarmTimeView = [[ZWSelectAlarmTimeView alloc]initWithFrame:CGRectMake(kWidth(75), kWidth(400), kScreenWidth-2*kWidth(75), kWidth(400))];
+        _selectAlarmTimeView.selectedTimeBlock = ^(NSInteger index) {
+            if (index == 0) {
+                weakSelf.beginDateView.currentDate = [NSDate date];
+                weakSelf.beginDateView.tipString = @"开始时间";
+                [weakSelf.beginDateView show];
+            }else{
+                weakSelf.endDateView.currentDate = [NSDate date];
+                weakSelf.endDateView.tipString = @"结束时间";
+                [weakSelf.endDateView show];
+            }
+        };
+        _selectAlarmTimeView.comfirmBlock = ^{
+            [weakSelf loadData];
+        };
+        [self.view addSubview:_selectAlarmTimeView];
+    }
+    return _selectAlarmTimeView;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.headerView = [[ZWCarAlarmInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(770))];
+    self.headerView.delegate = self;
+ 
+    self.tableView.tableHeaderView = self.headerView;
+    self.statues = [[ZWAlarmStatues alloc] init];
+
+    self.StartDateTime = [self getCurrentTime];
+    self.EndDateTime = [self getCurrentTime];
+    self.TypeId = 1;
+    [self loadData];
+}
+
+- (void)loadData{
+    NSDictionary *params = [NSDictionary dictionary];
+    if (self.TypeId == 1) {
+        params = @{
+                   @"TypeId":@(self.TypeId),
+                   @"VehicleNo":self.VehicleNo,
+
+                   };
+    }else{
+        params = @{
+                   @"TypeId":@(self.TypeId),
+                   @"VehicleNo":self.VehicleNo,
+                   @"StartDateTime":self.StartDateTime,
+                   @"EndDateTime":self.EndDateTime
+                   };
+        
+    }    
+    [YJProgressHUD showProgress:@"加载中" inView:self.view];;
+    [[NetworkTool sharedNetworkTool] PostUrlString:URL_POST_QueryAlarmStat parameters:params success:^(id  _Nullable responseObject) {
+        if ([responseObject[@"Code"] integerValue] == 0) {
+           [YJProgressHUD hide];
+            if ([responseObject[@"Data"] isKindOfClass:[NSDictionary class]]) {
+                NSArray *AlarmDayDataArray = responseObject[@"Data"][@"AlarmDayData"];//报警信息图表数据列表
+                NSMutableArray *temp = [NSMutableArray array];
+                NSMutableArray *tempArray = [NSMutableArray array];
+                for (NSDictionary *dic in AlarmDayDataArray) {
+                    ZWAlarmDayDataModel *model = [ZWAlarmDayDataModel mj_objectWithKeyValues:dic];
+                    [temp addObject:model.title];
+                    [tempArray addObject:model.value];
+                }
+                [self.titleArray removeAllObjects];
+                [self.titleArray addObjectsFromArray:temp.copy];
+                [self.valueArray removeAllObjects];
+                [self.valueArray addObjectsFromArray:tempArray.copy];
+                if (self.titleArray && self.titleArray.count) {
+                    self.statues.xArray = self.titleArray;
+                }
+                if (self.valueArray && self.valueArray.count) {
+                    self.statues.yValueArray = self.valueArray;
+                    CGPoint range = [ZWStatuesTool configureValueRangeWithData:self.statues.yValueArray];
+                    self.statues.valueRange = CGPointMake(0, range.y);
+                    self.headerView.statues = self.statues;
+                }
+                self.endTimeString = responseObject[@"Data"][@"EndDateTime"];//统计截止时间
+                NSArray *AlermTypeListDataArray = responseObject[@"Data"][@"AlermTypeListData"];//报表列表数据
+                NSMutableArray *tempM= [NSMutableArray array];
+                for (NSDictionary *dict in AlermTypeListDataArray) {
+                    ZWAlermTypeListDataModel *model = [ZWAlermTypeListDataModel mj_objectWithKeyValues:dict];
+                    [tempM addObject:model];
+                }
+                [self.dataArray removeAllObjects];
+                [self.dataArray addObjectsFromArray:tempM.copy];
+                [self.tableView reloadData];
+            }
+
+        }else{
+            [YJProgressHUD showMessage:responseObject[@"Message"]];
+        }
+    } failure:^(NSError * _Nonnull error) {
+
+    }];
+}
+
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight-safeAreaTopHeight-44);
+}
+
+#pragma mark -ZWCarAlarmInfoHeaderViewDelegate
+- (void)ZWCarAlarmInfoHeaderViewDelegateSelectedClick:(NSInteger)tag{
+    NSLog(@"%zd",tag);
+    if (tag == 1001) {
+        self.TypeId = 1;
+        [self loadData];
+    }
+    if (tag == 1002) {
+        self.TypeId = 2;
+        [self.selectAlarmTimeView show];
+    }
+}
+
+#pragma mark - UITableViewDataSource,UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.dataArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ZWCarAlarmInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([self class])];
+    if (!cell) {
+        cell = [[ZWCarAlarmInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:NSStringFromClass([self class])];
+    }
+
+    cell.model = self.dataArray[indexPath.row];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return kWidth(200);
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+    return kWidth(70);
+    }
+    return kWidth(20);
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return kWidth(20);
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section ==0) {
+        ZWCarAlarmInfoTableSectionHeaderView *v = [[ZWCarAlarmInfoTableSectionHeaderView alloc]init];
+        v.tipLab.text = [NSString stringWithFormat:@"报警统计截止到:%@",self.endTimeString];
+        return v;
+    }
+    return [UIView new];
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+/**  报警详情*/
+    if (self.dataArray.count>indexPath.row) {
+        ZWAlarmMapInfoViewController *vc = [ZWAlarmMapInfoViewController new];
+        ZWAlermTypeListDataModel *model =  self.dataArray[indexPath.row];
+        vc.AlarmTypeId = model.alarmtypeid;
+        vc.AlarmType = model.title;
+        vc.plate = self.VehicleNo;
+        vc.endTimeString = self.endTimeString;
+        UINavigationController *nav = [[UIApplication sharedApplication] visibleNavigationController];
+        [nav pushViewController:vc animated:YES];
+    }
+}
+
+- (UITableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+//        _tableView.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            [self.view addSubview:_tableView];
+    }
+    return _tableView;
+}
+- (NSMutableArray *)titleArray{
+    if (!_titleArray) {
+        _titleArray = [NSMutableArray array];
+    }
+    return _titleArray;
+}
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
+
+- (NSMutableArray *)valueArray{
+    if (!_valueArray) {
+        _valueArray = [NSMutableArray array];
+    }
+    return _valueArray;
+}
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ExT-P3-Nd6" customClass="ZWCarStatisticalReportsSectionHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="排名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqD-MM-g3c">
+                    <rect key="frame" x="0.0" y="36" width="50" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="企业" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIz-ml-QUq">
+                    <rect key="frame" x="50" y="36" width="100" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在线率" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w25-Wj-fL9">
+                    <rect key="frame" x="250" y="26" width="50" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上线时长(H)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ooC-J6-Rz2">
+                    <rect key="frame" x="300" y="26" width="75" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车牌号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXD-pb-AXW">
+                    <rect key="frame" x="150" y="36" width="100" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="w25-Wj-fL9" firstAttribute="width" secondItem="ExT-P3-Nd6" secondAttribute="width" multiplier="100:750" id="2Dr-e2-PcX"/>
+                <constraint firstItem="YIz-ml-QUq" firstAttribute="width" secondItem="ExT-P3-Nd6" secondAttribute="width" multiplier="200:750" id="67m-nG-cYZ"/>
+                <constraint firstItem="TXD-pb-AXW" firstAttribute="centerY" secondItem="ExT-P3-Nd6" secondAttribute="centerY" id="Iq9-J2-jcw"/>
+                <constraint firstItem="YIz-ml-QUq" firstAttribute="centerY" secondItem="ExT-P3-Nd6" secondAttribute="centerY" id="MYt-cd-sFY"/>
+                <constraint firstAttribute="trailing" secondItem="ooC-J6-Rz2" secondAttribute="trailing" id="SIE-6G-ydx"/>
+                <constraint firstItem="w25-Wj-fL9" firstAttribute="leading" secondItem="TXD-pb-AXW" secondAttribute="trailing" id="SbO-GW-Zw9"/>
+                <constraint firstItem="TXD-pb-AXW" firstAttribute="leading" secondItem="YIz-ml-QUq" secondAttribute="trailing" id="Slg-s7-bYy"/>
+                <constraint firstItem="dqD-MM-g3c" firstAttribute="leading" secondItem="ExT-P3-Nd6" secondAttribute="leading" id="U5S-9v-k3O"/>
+                <constraint firstItem="YIz-ml-QUq" firstAttribute="leading" secondItem="dqD-MM-g3c" secondAttribute="trailing" id="WqB-Io-blv"/>
+                <constraint firstItem="ooC-J6-Rz2" firstAttribute="centerY" secondItem="ExT-P3-Nd6" secondAttribute="centerY" id="eaO-te-vg8"/>
+                <constraint firstItem="w25-Wj-fL9" firstAttribute="centerY" secondItem="ExT-P3-Nd6" secondAttribute="centerY" id="qRd-7Y-89j"/>
+                <constraint firstItem="dqD-MM-g3c" firstAttribute="centerY" secondItem="ExT-P3-Nd6" secondAttribute="centerY" id="tqc-vm-L6H"/>
+                <constraint firstItem="TXD-pb-AXW" firstAttribute="width" secondItem="ExT-P3-Nd6" secondAttribute="width" multiplier="200:750" id="vaV-29-rIy"/>
+                <constraint firstItem="dqD-MM-g3c" firstAttribute="width" secondItem="ExT-P3-Nd6" secondAttribute="width" multiplier="100:750" id="xth-vZ-e5b"/>
+                <constraint firstItem="ooC-J6-Rz2" firstAttribute="leading" secondItem="w25-Wj-fL9" secondAttribute="trailing" id="ycY-93-hUt"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="companyLab" destination="YIz-ml-QUq" id="RjT-2N-KL9"/>
+                <outlet property="licenseLab" destination="TXD-pb-AXW" id="VEl-EP-DV5"/>
+                <outlet property="onlineRateLab" destination="w25-Wj-fL9" id="UIb-av-mVo"/>
+                <outlet property="onlineTimeLab" destination="ooC-J6-Rz2" id="THz-ZS-FAX"/>
+                <outlet property="rankLab" destination="dqD-MM-g3c" id="l00-Fs-iRh"/>
+            </connections>
+            <point key="canvasLocation" x="-62" y="-302"/>
+        </view>
+    </objects>
+</document>

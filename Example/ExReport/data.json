@@ -1,0 +1,556 @@
+[
+  {
+    "Url": "1111",
+    "MenuType": 2,
+    "childMenu": [
+      {
+        "Url": "11111",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 561,
+        "Name": "区域出土量",
+        "IsPermission": 1,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/rangestatistics_volumeofexcavated_icon.png",
+        "Path": "",
+        "ParentId": 552,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11112",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 562,
+        "Name": "区域消纳量",
+        "IsPermission": 1,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/rangestatistics_giventheamount_icon.png",
+        "Path": "",
+        "ParentId": 552,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11113",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 564,
+        "Name": "区域可疑工地",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/rangestatistics_suspicioussite_icon.png",
+        "Path": "",
+        "ParentId": 552,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11114",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 565,
+        "Name": "区域可疑消纳点",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/rangestatistics_suspiciousgiven_icon.png",
+        "Path": "",
+        "ParentId": 552,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11115",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 567,
+        "Name": "区域未密闭率",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/rangestatistics_notclosed_icon.png",
+        "Path": "",
+        "ParentId": 552,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11116",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 568,
+        "Name": "区域超速率",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/rangestatistics_excessivespeed_icon.png",
+        "Path": "",
+        "ParentId": 552,
+        "Level": 0,
+        "BtnStrs": ""
+      }
+    ],
+    "Id": 552,
+    "Name": "区域统计报表",
+    "IsPermission": 0,
+    "SortId": 0,
+    "IconClass": "\/Files\/AppIcon\/rangestatistics_icon_sel.png",
+    "Path": "",
+    "ParentId": 546,
+    "Level": 0,
+    "BtnStrs": ""
+  },
+  {
+    "Url": "1112",
+    "MenuType": 2,
+    "childMenu": [
+      {
+        "Url": "11121",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 570,
+        "Name": "出土量最多企业",
+        "IsPermission": 1,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/enterprisestatistics_volumeofexcavated_maximum_icon.png",
+        "Path": "",
+        "ParentId": 555,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11123",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 572,
+        "Name": "未密闭率最高企业",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/enterprisestatistics_notclosed_thehighest_icon.png",
+        "Path": "",
+        "ParentId": 555,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11125",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 574,
+        "Name": "超速率最高企业",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/enterprisestatistics_excessivespeed_thehighest_icon.png",
+        "Path": "",
+        "ParentId": 555,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11122",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 571,
+        "Name": "出土量最少企业",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/enterprisestatistics_volumeofexcavated_minimum_icon.png",
+        "Path": "",
+        "ParentId": 555,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11126",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 576,
+        "Name": "超速率最低企业",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/enterprisestatistics_excessivespeed_thelowest_icon.png",
+        "Path": "",
+        "ParentId": 555,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11124",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 573,
+        "Name": "未密闭率最低企业",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/enterprisestatistics_notclosed_thelowest_icon.png",
+        "Path": "",
+        "ParentId": 555,
+        "Level": 0,
+        "BtnStrs": ""
+      }
+    ],
+    "Id": 555,
+    "Name": "企业统计报表",
+    "IsPermission": 0,
+    "SortId": 0,
+    "IconClass": "\/Files\/AppIcon\/enterprisestatistics_icon_sel.png",
+    "Path": "",
+    "ParentId": 546,
+    "Level": 0,
+    "BtnStrs": ""
+  },
+  {
+    "Url": "1113",
+    "MenuType": 2,
+    "childMenu": [
+      {
+        "Url": "11131",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 579,
+        "Name": "出土量最多工地",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/sitestatistics_volumeofexcavated_maximum_icon.png",
+        "Path": "",
+        "ParentId": 557,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11133",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 583,
+        "Name": "提前出土工地",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/sitestatistics_unearthedinadvance_icon.png",
+        "Path": "",
+        "ParentId": 557,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11134",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 584,
+        "Name": "工地出土情况",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/sitestatistics_siteconditions_icon.png",
+        "Path": "",
+        "ParentId": 557,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11135",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 586,
+        "Name": "黑工地数",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/sitestatistics_blacksite_icon.png",
+        "Path": "",
+        "ParentId": 557,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11132",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 581,
+        "Name": "出土量最少工地",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/sitestatistics_volumeofexcavated_minimum_icon.png",
+        "Path": "",
+        "ParentId": 557,
+        "Level": 0,
+        "BtnStrs": ""
+      }
+    ],
+    "Id": 557,
+    "Name": "工地统计报表",
+    "IsPermission": 0,
+    "SortId": 0,
+    "IconClass": "\/Files\/AppIcon\/statisticalreportpage_sitestatistics_icon.png",
+    "Path": "",
+    "ParentId": 546,
+    "Level": 0,
+    "BtnStrs": ""
+  },
+  {
+    "Url": "1114",
+    "MenuType": 2,
+    "childMenu": [
+      {
+        "Url": "11141",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 588,
+        "Name": "消纳量最多消纳点",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/givenstatistical_giventheamount_maximum_icon.png",
+        "Path": "",
+        "ParentId": 558,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11142",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 589,
+        "Name": "消纳量最少消纳点",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/givenstatistical_giventheamount_minimum_icon.png",
+        "Path": "",
+        "ParentId": 558,
+        "Level": 0,
+        "BtnStrs": ""
+      }
+    ],
+    "Id": 558,
+    "Name": "消纳点统计报表",
+    "IsPermission": 0,
+    "SortId": 0,
+    "IconClass": "\/Files\/AppIcon\/statisticalreportpage_givenstatistics_icon.png",
+    "Path": "",
+    "ParentId": 546,
+    "Level": 0,
+    "BtnStrs": ""
+  },
+  {
+    "Url": "1115",
+    "MenuType": 2,
+    "childMenu": [
+      {
+        "Url": "11151",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 566,
+        "Name": "上线时长最高车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_onlinetime_thehighest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11153",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 575,
+        "Name": "未密闭时长最高车辆 ",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_notclosed_thehighest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11155",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 578,
+        "Name": "超速时长最高车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_excessivespeed_thehighest_icon",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11157",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 582,
+        "Name": "超载时长最高车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_overload_thehighest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11159",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 587,
+        "Name": "已装设备车辆统计",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_vehicle_reporting_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11152",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 569,
+        "Name": "上线时长最低车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_onlinetime_thelowest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11154",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 577,
+        "Name": "未密闭时长最低车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_notclosed_thelowest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11156",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 580,
+        "Name": "超速时长最低车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_excessivespeed_thelowest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      },
+      {
+        "Url": "11158",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 585,
+        "Name": "超载时长最低车辆",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/carstatistics_overload_thelowest_icon.png",
+        "Path": "",
+        "ParentId": 559,
+        "Level": 0,
+        "BtnStrs": ""
+      }
+    ],
+    "Id": 559,
+    "Name": "车辆统计报表",
+    "IsPermission": 0,
+    "SortId": 0,
+    "IconClass": "\/Files\/AppIcon\/statisticalreportpage_carstatistics_icon.png",
+    "Path": "",
+    "ParentId": 546,
+    "Level": 0,
+    "BtnStrs": ""
+  },
+  {
+    "Url": "1116",
+    "MenuType": 2,
+    "childMenu": [
+      {
+        "Url": "11161",
+        "MenuType": 2,
+        "childMenu": [
+          
+        ],
+        "Id": 563,
+        "Name": "重点监控区域 ",
+        "IsPermission": 0,
+        "SortId": 0,
+        "IconClass": "\/Files\/AppIcon\/specialstatistics_icon_sel.png",
+        "Path": "",
+        "ParentId": 560,
+        "Level": 0,
+        "BtnStrs": ""
+      }
+    ],
+    "Id": 560,
+    "Name": "专题统计报表",
+    "IsPermission": 0,
+    "SortId": 0,
+    "IconClass": "\/Files\/AppIcon\/statisticalreportpage_specialstatistics_icon.png",
+    "Path": "",
+    "ParentId": 546,
+    "Level": 0,
+    "BtnStrs": ""
+  }
+]

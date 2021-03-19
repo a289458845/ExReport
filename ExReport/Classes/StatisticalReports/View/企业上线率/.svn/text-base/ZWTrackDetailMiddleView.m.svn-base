@@ -1,0 +1,145 @@
+//
+//  ZWTrackDetailMiddleView.m
+//  Muck
+//
+//  Created by 张威 on 2018/9/26.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWTrackDetailMiddleView.h"
+#import "NSString+StringSize.h"
+#import "ZWHisLocStatModel.h"
+
+@interface ZWTrackDetailMiddleView()
+
+@property (nonatomic,strong)UILabel *mileageLabel;
+@property (nonatomic,strong)UIImageView *timeImgView;
+@property (nonatomic,strong)UILabel *timeLabel;
+@property (nonatomic,strong)UIImageView *startImgView;
+@property (nonatomic,strong)UILabel *startLabel;
+@property (nonatomic,strong)UIImageView *endImgView;
+@property (nonatomic,strong)UILabel *endLabel;
+
+@end
+@implementation ZWTrackDetailMiddleView
+- (void)setModel:(ZWHisLocStatModel *)model
+{
+    _model = model;
+    _mileageLabel.text = [NSString stringWithFormat:@"总里程:%@km",_model.Mileage];
+    
+    NSString *endTime;
+    if (model.EndDateTime.length > 19) {
+        endTime = [model.EndDateTime substringToIndex:19];
+        endTime =  [endTime stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    }else{
+        endTime =  [model.EndDateTime stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    }
+    _timeLabel.text = [NSString stringWithFormat:@"%@至%@",_model.StartDateTime,endTime];
+    _startLabel.text = _model.StartAddress;
+    CGFloat H1 = [_model.StartAddress heightWithLabelWidth:kScreenWidth-kWidth(90) font:kSystemFont(26)]-kWidth(26);
+    CGFloat H2 = [_model.EndAddress heightWithLabelWidth:kScreenWidth-kWidth(90) font:kSystemFont(26)]-kWidth(26);
+    self.frame = CGRectMake(0, kScreenHeight-kWidth(360-26*2)-NavationBarHeight-H1-H2-safeAreaBottomHeight, kScreenWidth, kWidth(360-26*2)+H1+H2+safeAreaBottomHeight);
+    [_endImgView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.mas_left).offset(kWidth(35));
+        make.centerY.mas_equalTo(self.startLabel.mas_bottom).offset(kWidth(20)+kWidth(13));
+    }];
+    [_endLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kWidth(70));
+        make.right.mas_equalTo(self).offset(kWidth(-20));
+        make.top.mas_equalTo(self.startLabel.mas_bottom).offset(kWidth(20));
+    }];
+    _endLabel.text = _model.EndAddress;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.frame = CGRectMake(0, kScreenHeight-NavationBarHeight-kWidth(360-26*2)-safeAreaBottomHeight, kScreenWidth, kWidth(360-26*2-88)+safeAreaBottomHeight);
+        self.backgroundColor = COLORWITHHEX(kColor_FFFFFF);
+        [self setupUI];
+        [self setupConstraint];
+    }
+    return self;
+}
+
+- (void)setupUI{
+    _mileageLabel = [UILabel LabelWithFont:kSystemFont(28) andColor:COLORWITHHEX(@"#3A3D44") andTextAlignment:left andString:@" "];
+    [self addSubview:_mileageLabel];
+    
+    _timeImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"historicalroute_time_icon"]];
+    [self addSubview:_timeImgView];
+    
+    _timeLabel = [UILabel LabelWithFont:kSystemFont(20) andColor:COLORWITHHEX(@"#AFB4C0") andTextAlignment:left andString:@" "];
+    [self addSubview:_timeLabel];
+    
+    _startImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lishiguiji_qidian"]];
+    [self addSubview:_startImgView];
+    
+    _startLabel = [UILabel LabelWithFont:kSystemFont(26) andColor:COLORWITHHEX(@"#6D737F") andTextAlignment:left andString:@" "];
+    _startLabel.numberOfLines = 0;
+    [self addSubview:_startLabel];
+    
+    _endImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lishiguiji_zhongdian"]];
+    [self addSubview:_endImgView];
+    
+    _endLabel = [UILabel LabelWithFont:kSystemFont(26) andColor:COLORWITHHEX(@"#6D737F") andTextAlignment:left andString:@" "];
+    _endLabel.numberOfLines = 0;
+    [self addSubview:_endLabel];
+}
+
+
+- (void)setupConstraint{
+    [_mileageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kWidth(70));
+        make.centerY.mas_equalTo(self.mas_top).offset(kWidth(20)+kWidth(14));
+        make.right.mas_equalTo(self).offset(kWidth(-20));
+    }];
+    
+    [_timeImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.mas_left).offset(kWidth(35));
+        make.centerY.mas_equalTo(self.mas_top).offset(kWidth(20)+kWidth(28)+kWidth(20)+kWidth(10));
+    }];
+    [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kWidth(70));
+        make.centerY.mas_equalTo(self.timeImgView);
+        make.right.mas_equalTo(self).offset(kWidth(-20));
+    }];
+    
+    [_startImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.mas_left).offset(kWidth(35));
+        make.centerY.mas_equalTo(self.mas_top).offset(kWidth(20)+kWidth(28)+kWidth(20)+kWidth(10)+kWidth(20)+kWidth(13));
+    }];
+    [_startLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kWidth(70));
+        make.right.mas_equalTo(self).offset(kWidth(-20));
+        make.top.mas_equalTo(self.mas_top).offset(kWidth(20)+kWidth(28)+kWidth(20)+kWidth(10)+kWidth(20));
+    }];
+    
+    [_endImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.mas_left).offset(kWidth(35));
+        make.centerY.mas_equalTo(self.startLabel.mas_bottom).offset(kWidth(20)+kWidth(13));
+        
+    }];
+    [_endLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self).offset(kWidth(70));
+        make.right.mas_equalTo(self).offset(kWidth(-20));
+        make.top.mas_equalTo(self.startLabel.mas_bottom).offset(kWidth(20));
+    }];
+}
+
+- (void)show{
+    [UIView animateWithDuration:0.7 animations:^{
+    self.frame = CGRectMake(0, kScreenHeight-NavationBarHeight-kWidth(360-26*2)-safeAreaBottomHeight, kScreenWidth, kWidth(360-26*2-88)+safeAreaBottomHeight);
+    }completion:^(BOOL finished) {
+        self.hidden = NO;
+
+    }];
+}
+- (void)disMiss{
+    [UIView animateWithDuration:0.7 animations:^{
+        self.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kWidth(360-26*2-88)+safeAreaBottomHeight);
+    }completion:^(BOOL finished) {
+        self.hidden = YES;
+    }];    
+}
+@end

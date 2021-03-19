@@ -1,0 +1,518 @@
+//
+//  ZWCarBasicInfoViewController.m
+//  Muck
+//
+//  Created by 张威 on 2018/10/30.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWCarBasicInfoViewController.h"
+#import "ZWCarBaseInfoOneCell.h"
+#import "ZWCarBaseInfoTwoCell.h"
+#import "ZWCarBaseInfoThreeCell.h"
+#import "ZWDevVehicleStateModel.h"
+#import "ZWVehicleLastUnerModel.h"
+#import "SignalR.h"
+#import "ZWVehicleIconStatusModel.h"
+
+
+
+@interface ZWCarBasicInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
+@property (strong, nonatomic)ZWVehicleLastUnerModel *unerModel;
+@property (strong, nonatomic)ZWDevVehicleStateModel *model;
+
+@property (strong, nonatomic)SRHubConnection *hubConnection;
+@property (nonatomic,strong) SRHubProxy *chat;
+@property (nonatomic,copy) NSString *chatString;
+
+@property (nonatomic,assign)BOOL siteInfoCellextend;
+@property (nonatomic,assign)BOOL companyInfoCellExtend;
+
+/**当前状态*/
+@property (copy, nonatomic)NSString *currentStatus;
+/**速度*/
+@property (copy, nonatomic)NSString *currentSpeed;
+/**最后位置*/
+@property (copy, nonatomic)NSString *endLocation;
+/**最后定位时间*/
+@property (copy, nonatomic)NSString *endTime;
+@property (strong, nonatomic)NSMutableArray *imgArray;
+
+@property (strong, nonatomic)NSArray *imgCloneArray;
+@end
+
+@implementation ZWCarBasicInfoViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //加入设备号
+    
+    _siteInfoCellextend = NO;
+    _companyInfoCellExtend = NO;
+    self.view.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+
+    self.chatString = self.PhoneNum;
+ 
+    //车辆基本信息 获取车辆实时状态
+    [self loadDevVehicleData];
+    [self loadDevVehicleOtherData];
+    
+
+    
+//    [self.hubConnection start];
+    
+    //连接获取数据
+    [self reateLongConnectionForVehicleInformation];
+    
+    
+}
+
+
+
+- (void)setPhoneNum:(NSString *)PhoneNum{
+    _PhoneNum = PhoneNum;
+      [self.chat invoke:@"sub" withArgs:@[PhoneNum]];
+    
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [_hubConnection stop];
+    //    [_timer invalidate];
+    //    _timer = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.chat invoke:@"sub" withArgs:@[self.PhoneNum]];
+    
+}
+//车辆基本信息 获取车辆实时状态
+- (void)loadDevVehicleData{
+    NSDictionary *params = @{
+                             @"devNo":self.PhoneNum
+                             };
+    [[NetworkTool sharedNetworkTool] GetUrlString:URL_GET_GetDevVehicleState parameters:params success:^(id  _Nullable responseObject) {
+        if ([responseObject[@"Code"] integerValue] == 0) {
+            if ([responseObject[@"Data"] isKindOfClass:[NSArray class]]) {
+                NSArray *DataResultArray = responseObject[@"Data"];
+                NSDictionary *resultDict = [DataResultArray firstObject];
+                self.currentStatus = resultDict[@"DeviceStatusStr"];
+                self.currentSpeed = [NSString stringWithFormat:@"%@Km/h",resultDict[@"Speed"]];
+                self.endLocation = resultDict[@"SerAddress"];
+                self.endTime = [resultDict[@"LastDWTime"] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+                NSArray *ssStatus = resultDict[@"ssStatus"];
+                [self.imgArray removeAllObjects];
+                NSMutableArray *temp = [NSMutableArray array];
+                for (NSDictionary *dict in ssStatus) {
+                    ZWVehicleIconStatusModel *model = [ZWVehicleIconStatusModel mj_objectWithKeyValues:dict];
+                    if ([model.OptionName isEqualToString:@"ACC"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_acc_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"ACC"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_acc_basicinformation_acc_off"];
+                    }
+                    
+                    if ([model.OptionName isEqualToString:@"左转"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_left_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"左转"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_left_off"];
+                    }
+                    
+                    if ([model.OptionName isEqualToString:@"右转"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_right_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"右转"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_right_off"];
+                    }
+                    
+                    if ([model.OptionName isEqualToString:@"远光灯"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_distancelight_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"远光灯"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_distancelight_off"];
+                    }
+                    
+                    if ([model.OptionName isEqualToString:@"近光灯"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_passinlight_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"近光灯"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_passinlight_off"];
+                    }
+
+                    if ([model.OptionName isEqualToString:@"油路"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_fuelshutoff_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"油路"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_fuelshutoff_off"];
+                    }
+                    
+                    if ([model.OptionName isEqualToString:@"刹车"] && [model.IsOk isEqualToString:@"1"]) {
+                        [temp addObject:@"basicinformation_brake_on"];
+                    }
+                    if ([model.OptionName isEqualToString:@"刹车"] && [model.IsOk isEqualToString:@"0"]) {
+                        [temp addObject:@"basicinformation_brake_off"];
+                    }
+                }
+                self.imgArray = temp;
+                self.imgCloneArray = temp.copy;
+                NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:0];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+
+            }
+        }else{
+            [YJProgressHUD showMessage:responseObject[@"Message"]];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+
+
+//车辆基本信息-最新出土工地企业信息
+- (void)loadDevVehicleOtherData{
+    NSDictionary *params = @{
+                             @"PhoneNum":self.PhoneNum
+                             };
+    [[NetworkTool sharedNetworkTool] PostUrlString:URL_POST_GetVehicleLastUner parameters:params success:^(id  _Nullable responseObject) {
+        if ([responseObject[@"Code"] integerValue] == 0) {
+            if ([responseObject[@"Data"] isKindOfClass:[NSDictionary class]]) {
+                ZWVehicleLastUnerModel *unerModel = [ZWVehicleLastUnerModel mj_objectWithKeyValues:responseObject[@"Data"]];
+                self.unerModel = unerModel;
+                
+                NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:1];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+                
+                NSIndexSet *indexSet1 = [[NSIndexSet alloc]initWithIndex:2];
+                [self.tableView reloadSections:indexSet1 withRowAnimation:UITableViewRowAnimationNone];
+              
+            }
+        }else{
+            [YJProgressHUD showMessage:responseObject[@"Message"]];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+- (void)setupConstraint{
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(kWidth(20));
+        make.top.bottom.equalTo(self.view);
+        make.right.equalTo(self.view).offset(-kWidth(20));;
+    }];
+}
+
+
+//注册的方法
+- (void)addMessage:(id)message{
+    NSLog(@"message is %@",message);
+    
+//    [self loadDevVehicleStateData];
+//    [self loadVehicleLastUneData];
+    
+}
+
+#pragma mark 车辆信息长连接
+- (void)reateLongConnectionForVehicleInformation{
+    Kweaself
+   //Connect to the service
+    _hubConnection = [SRHubConnection connectionWithURLString:@"http://signalr.hgt.comlbs.com/signalr"];
+    // Create a proxy to the chat service
+    _chat = (SRHubProxy *)[_hubConnection createHubProxy:@"GpsHub"];
+
+    [_chat on:@"addMessage" perform:self selector:@selector(addMessage:)];
+    
+    [_hubConnection setStarted:^{
+        NSLog(@"Connection Started");
+        //此时订阅
+        [weakSelf.chat invoke:@"sub" withArgs:@[weakSelf.PhoneNum]];
+        
+
+    }];
+    
+    //收到数据
+    [_hubConnection setReceived:^(NSString *message) {
+        NSLog(@"Connection Recieved Data: %@",message);
+        NSDictionary *dic = (NSDictionary *)message;
+        NSArray *Aarray = dic[@"A"];
+        
+    
+        NSDictionary *modeldic = [[Aarray firstObject] firstObject];
+        [weakSelf dealSingalDataWidthDict:modeldic];
+    }];
+    
+    [_hubConnection setConnectionSlow:^{
+        NSLog(@"Connection Slow");
+    }];
+    
+    [_hubConnection setReconnecting:^{
+        NSLog(@"Connection Reconnecting");
+    }];
+    
+    [_hubConnection setReconnected:^{
+        NSLog(@"Connection Reconnected");
+    }];
+    
+    [_hubConnection setClosed:^{
+        NSLog(@"Connection Closed");
+    }];
+    
+    [_hubConnection setError:^(NSError *error) {
+        NSLog(@"Connection Error: %@",error);
+    }];
+    
+    [_hubConnection start];
+}
+
+
+
+
+- (void)dealSingalDataWidthDict:(NSDictionary *)dict{
+    
+    //最后定位时间
+    self.endTime =  [[dict[@"GpsDateTime"] substringToIndex:19] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    //获取当前时间
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [formatter dateFromString:self.endTime];
+   //[1,11,12,13,14,7,10,8,15] --> [ACC,左转,右转,远光,近光,断油路,刹车,电路,顶棚]
+//    1,
+//    2,
+//    9,
+//    10
+//    NSLog(@"最后定位时间:%@",date);
+//    NSLog(@"当前时间:%@",[NSDate date]);
+    //相差多少分钟
+    int sec = [date timeIntervalSinceNow]/60;
+    //获取状态
+    NSArray *statusArray = dict[@"Status"];
+    
+    [self.imgArray removeAllObjects];
+    NSMutableArray *tempArray = [NSMutableArray array];
+
+    
+   
+      //[1,11,12,13,14,7,10,8,15] --> [ACC,左转,右转,远光,近光,断油路,刹车,电路,顶棚]
+    if ([self.imgCloneArray containsObject:@"basicinformation_acc_on"] || [self.imgCloneArray containsObject:@"basicinformation_acc_basicinformation_acc_off"]) {
+        if ([statusArray containsObject:@(1)]) { //ACC
+            [tempArray addObject:@"basicinformation_acc_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_acc_basicinformation_acc_off"];
+        }
+    }
+    
+    if ([self.imgCloneArray containsObject:@"basicinformation_left_on"] || [self.imgCloneArray containsObject:@"basicinformation_left_off"]) {
+        if ([statusArray containsObject:@(11)]) {//左转
+            [tempArray addObject:@"basicinformation_left_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_left_off"];
+        }
+    }
+    
+    if ([self.imgCloneArray containsObject:@"basicinformation_right_on"] || [self.imgCloneArray containsObject:@"basicinformation_right_off"]) {
+        if ([statusArray containsObject:@(12)]) {//右转
+            [tempArray addObject:@"basicinformation_right_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_right_off"];
+        }
+    }
+    
+    if ([self.imgCloneArray containsObject:@"basicinformation_distancelight_on"] || [self.imgCloneArray containsObject:@"basicinformation_distancelight_off"]) {
+        if ([statusArray containsObject:@(13)]) {//远光
+            [tempArray addObject:@"basicinformation_distancelight_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_distancelight_off"];
+        }
+    }
+    
+    if ([self.imgCloneArray containsObject:@"basicinformation_passinlight_on"] || [self.imgCloneArray containsObject:@"basicinformation_passinlight_off"]) {
+        if ([statusArray containsObject:@(14)]) {//近光
+            [tempArray addObject:@"basicinformation_passinlight_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_passinlight_off"];
+        }
+    }
+    
+    if ([self.imgCloneArray containsObject:@"basicinformation_fuelshutoff_on"] || [self.imgCloneArray containsObject:@"basicinformation_fuelshutoff_off"]) {
+        if ([statusArray containsObject:@(7)]) {//断油路
+            [tempArray addObject:@"basicinformation_fuelshutoff_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_fuelshutoff_off"];
+        }
+    }
+    
+    if ([self.imgCloneArray containsObject:@"basicinformation_brake_on"] || [self.imgCloneArray containsObject:@"basicinformation_brake_off"]) {
+        if ([statusArray containsObject:@(10)]) {//刹车
+            [tempArray addObject:@"basicinformation_brake_on"];
+        }else{
+            [tempArray addObject:@"basicinformation_brake_off"];
+        }
+    }
+
+    
+    self.imgArray = tempArray;
+    //速度
+    self.currentSpeed = [NSString stringWithFormat:@"%@Km/h",dict[@"Speed"]];
+    
+    
+    //当前状态
+    NSString *currentStatus = @"";
+//    NSLog(@"相差分钟:%d",sec);
+    if (sec > 10) {
+        currentStatus = @"通讯中断";
+    }else{
+        if ([statusArray containsObject:@(2)]) {
+            if ([self.currentSpeed intValue] >0) {
+                currentStatus = @"行驶";
+            }else if ([self.currentSpeed intValue] == 0){
+                if ([statusArray containsObject:@(1)]) {
+                    currentStatus = @"停车";
+                }else{
+                    currentStatus = @"熄火";
+                }
+            }
+        }else{
+            currentStatus = @"定位失败";
+        }
+    }
+    
+    self.currentStatus = currentStatus;
+    self.endLocation =  dict[@"Poi"][@"Address"];
+    
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+
+}
+
+
+- (UITableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableView registerClass:[ZWCarBaseInfoOneCell class] forCellReuseIdentifier:NSStringFromClass([ZWCarBaseInfoOneCell class])];
+        
+        [_tableView registerClass:[ZWCarBaseInfoTwoCell class] forCellReuseIdentifier:NSStringFromClass([ZWCarBaseInfoTwoCell class])];
+        
+        [_tableView registerClass:[ZWCarBaseInfoThreeCell class] forCellReuseIdentifier:NSStringFromClass([ZWCarBaseInfoThreeCell class])];
+        _tableView.bounces = NO;
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
+        [self.view addSubview:_tableView];
+    };
+    
+    return _tableView;
+}
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 3;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    Kweaself
+    if (indexPath.section == 0) {
+    ZWCarBaseInfoOneCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZWCarBaseInfoOneCell class])];
+        cell.currentStatusLab.text = self.currentStatus;
+        cell.currentSpeedLab.text = self.currentSpeed;
+        cell.finalLocationLab.text = self.endLocation;
+        cell.finalTimeLab.text = self.endTime;
+        cell.imgArray = self.imgArray;
+        return cell;
+    }else if (indexPath.section == 1){
+        ZWCarBaseInfoTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZWCarBaseInfoTwoCell class])];
+        cell.isExtend = self.siteInfoCellextend;
+        cell.indexPath = indexPath;
+        cell.clickExtend = ^(NSIndexPath *indexPath, BOOL extend) {
+            weakSelf.siteInfoCellextend = !extend;
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        };
+        cell.model = self.unerModel;
+        return cell;
+    }else{
+        ZWCarBaseInfoThreeCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZWCarBaseInfoThreeCell class])];
+        cell.isExtend = self.companyInfoCellExtend;
+        cell.indexPath = indexPath;
+        cell.clickExtend = ^(NSIndexPath *indexPath, BOOL extend) {
+            weakSelf.companyInfoCellExtend = !extend;
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        };
+        cell.model = self.unerModel;
+        return cell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return kWidth(750);
+    }else if (indexPath.section == 1){
+        if (_siteInfoCellextend) {
+            return kWidth(313);
+        }else{
+            return kWidth(96);
+        }
+    }else{
+        if (_companyInfoCellExtend) {
+            return kWidth(600);
+        }else{
+            return kWidth(96);
+        }
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return kWidth(20);
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *headerView = [UIView new];
+    headerView.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+    return headerView;
+}
+
+-(NSMutableArray *)imgArray{
+    if (!_imgArray) {
+        _imgArray = [NSMutableArray array];
+    }
+    return _imgArray;
+}
+
+
+- (NSArray *)imgCloneArray{
+    if (!_imgCloneArray) {
+        _imgCloneArray = [NSArray array];
+    }
+    return _imgCloneArray;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (void)dealloc{
+    [_hubConnection stop];
+    [_hubConnection closed];
+}
+
+#pragma mark - Navigation
+/*
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

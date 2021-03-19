@@ -1,0 +1,213 @@
+//
+//  ZWCarHistoricalTrackViewController.m
+//  Muck
+//
+//  Created by 张威 on 2018/8/26.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWCarHistoricalTrackViewController.h"
+#import "ZWCarHistoricalTrackTableViewCell.h"
+#import "ZWTrackDetailViewController.h"
+#import "ZWHisLocStatModel.h"
+#import "ZWSegmentedControl.h"
+#import "LDSelectDateView.h"
+
+static NSString *const trackTableViewCellReusedID = @"trackTableViewCellReusedID";
+
+@interface ZWCarHistoricalTrackViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic)ZWSegmentedControl *segmentedControl;
+@property (strong, nonatomic)UITableView *tableView;
+@property(nonatomic,assign)NSInteger TypeId;
+@property (copy, nonatomic)NSString *StartDateTime;
+@property (copy, nonatomic)NSString *EndDateTime;
+@property (strong, nonatomic)NSMutableArray *dataArray;
+@property (strong, nonatomic)LDSelectDateView *dateView;
+@property (nonatomic,strong)UILabel *noDataLab;
+
+@end
+
+@implementation ZWCarHistoricalTrackViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.view.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+    self.TypeId = 1;
+    self.StartDateTime = [self getCurrentTime];
+    self.EndDateTime = [self getCurrentTime];
+    [self loadData];
+}
+
+
+- (LDSelectDateView *)dateView{
+    Kweaself
+    if (!_dateView) {
+        _dateView = [[LDSelectDateView alloc]init];
+        _dateView.confirmAction = ^(NSString *dateStr) {
+            weakSelf.StartDateTime = dateStr;
+            weakSelf.EndDateTime = dateStr;
+            
+            [weakSelf loadData];
+        };
+        [self.view addSubview:_dateView];
+    }
+    return _dateView;
+}
+
+- (void)setupConstraint{
+    [self.segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.view).offset(kWidth(30));
+        make.height.mas_equalTo(kWidth(80));
+        make.width.equalTo(self.view);
+    }];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.segmentedControl.mas_bottom).offset(kWidth(20));
+        make.bottom.equalTo(self.view);
+    }];
+}
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.dataArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ZWCarHistoricalTrackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:trackTableViewCellReusedID];
+    cell.model = self.dataArray[indexPath.row];
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return kWidth(320);
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ZWHisLocStatModel *model = self.dataArray[indexPath.row];
+    ZWTrackDetailViewController *vc =[[ZWTrackDetailViewController alloc]init];
+    vc.HisLocStatModel = model;
+    vc.StartDateTime = model.StartDateTime;
+    vc.EndDateTime = model.EndDateTime;
+    vc.VehicleNo = self.VehicleNo;
+    UINavigationController *nav = [[UIApplication sharedApplication] visibleNavigationController];
+    [nav pushViewController:vc animated:YES];
+}
+
+
+
+- (NSString *)getCurrentTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    return dateTime;
+}
+
+- (void)loadData{
+    //1=每天 2=自定义 3=月
+    NSDictionary *params = @{
+                             @"VehicleNo":self.VehicleNo
+                             ,
+                             @"TypeId":@(self.TypeId),
+                             @"StartDateTime":self.StartDateTime,
+                             @"EndDateTime":self.EndDateTime
+                             };
+       [YJProgressHUD showProgress:@"加载中" inView:self.view];;
+    [[NetworkTool sharedNetworkTool] PostUrlString:URL_POST_HisLocStat parameters:params success:^(id  _Nullable responseObject) {
+        if ([responseObject[@"Code"] integerValue] == 0) {
+            [YJProgressHUD hide];
+            if ([responseObject[@"Data"] isKindOfClass:[NSArray class]]) {
+                NSMutableArray *tempArray = [NSMutableArray array];
+                for (NSDictionary *dict in responseObject[@"Data"]) {
+                    ZWHisLocStatModel *model = [ZWHisLocStatModel mj_objectWithKeyValues:dict];
+                    [tempArray addObject:model];
+                }
+                [self.dataArray removeAllObjects];
+                [self.dataArray addObjectsFromArray:tempArray.copy];
+                [self.tableView reloadData];
+                if (self.dataArray.count == 0) {
+                    self.noDataLab.hidden = NO;
+                }else{
+                    self.noDataLab.hidden = YES;
+                }
+            }
+        }else{
+            [YJProgressHUD showMessage:responseObject[@"Message"]];
+        }
+    } failure:^(NSError * _Nonnull error) {
+          [YJProgressHUD showMessage:error.domain];
+    }];
+}
+
+- (ZWSegmentedControl *)segmentedControl{
+    Kweaself
+    if (!_segmentedControl) {
+        _segmentedControl = [[ZWSegmentedControl alloc]init];
+        _segmentedControl.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+        _segmentedControl.didTitleLabBlock = ^(NSInteger titleTag) {
+            NSLog(@"%zd",titleTag);
+            
+            if (titleTag == 1002) {
+                weakSelf.TypeId = 2;
+                weakSelf.dateView.currentDate = [NSDate date];
+                weakSelf.dateView.tipString = @"选择时间";
+                [weakSelf.dateView show];
+            }
+        };
+        [self.view addSubview:_segmentedControl];
+        
+    }
+    return _segmentedControl;
+}
+
+- (UITableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.bounces = NO;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableView registerClass:[ZWCarHistoricalTrackTableViewCell class] forCellReuseIdentifier:trackTableViewCellReusedID];
+        _tableView.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
+        [self.view addSubview:_tableView];
+    };
+    
+    return _tableView;
+}
+
+- (UILabel *)noDataLab{
+    if (!_noDataLab) {
+        _noDataLab = [UILabel LabelWithFont:kSystemFont(30) andColor:COLORWITHHEX(kColor_6D737F) andTextAlignment:center andString:@"今日车辆查无轨迹"];
+        [self.view addSubview:_noDataLab];
+        [_noDataLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self.view);
+        }];
+    }
+    return _noDataLab;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

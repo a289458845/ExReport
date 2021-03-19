@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="OjZ-17-IPc" customClass="ZWAreaUnearthedTableSectionHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="排名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0B-lU-v7K">
+                    <rect key="frame" x="0.0" y="25" width="62.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="区名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DOy-qf-ChB">
+                    <rect key="frame" x="62.5" y="25" width="100" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出土量(立方)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UA0-cS-hCe">
+                    <rect key="frame" x="275" y="25.5" width="100" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工地" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Squ-Df-dFD">
+                    <rect key="frame" x="162.5" y="25" width="112.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="u0B-lU-v7K" firstAttribute="centerY" secondItem="OjZ-17-IPc" secondAttribute="centerY" id="2Ib-Ww-3t0"/>
+                <constraint firstItem="UA0-cS-hCe" firstAttribute="leading" secondItem="Squ-Df-dFD" secondAttribute="trailing" id="G4F-Uh-1EH"/>
+                <constraint firstItem="Squ-Df-dFD" firstAttribute="width" secondItem="OjZ-17-IPc" secondAttribute="width" multiplier="225:750" id="GoH-qG-vaN"/>
+                <constraint firstItem="u0B-lU-v7K" firstAttribute="width" secondItem="OjZ-17-IPc" secondAttribute="width" multiplier="125:750" id="Ijy-br-1oG"/>
+                <constraint firstAttribute="trailing" secondItem="UA0-cS-hCe" secondAttribute="trailing" id="UJe-f1-Smd"/>
+                <constraint firstItem="UA0-cS-hCe" firstAttribute="centerY" secondItem="OjZ-17-IPc" secondAttribute="centerY" id="ZdO-96-4Nh"/>
+                <constraint firstItem="Squ-Df-dFD" firstAttribute="centerY" secondItem="OjZ-17-IPc" secondAttribute="centerY" id="aRa-cM-HFK"/>
+                <constraint firstItem="DOy-qf-ChB" firstAttribute="centerY" secondItem="OjZ-17-IPc" secondAttribute="centerY" id="b2I-7v-Lea"/>
+                <constraint firstItem="u0B-lU-v7K" firstAttribute="leading" secondItem="OjZ-17-IPc" secondAttribute="leading" id="cA9-vF-ewX"/>
+                <constraint firstItem="DOy-qf-ChB" firstAttribute="leading" secondItem="u0B-lU-v7K" secondAttribute="trailing" id="fT1-CK-bFw"/>
+                <constraint firstItem="DOy-qf-ChB" firstAttribute="width" secondItem="OjZ-17-IPc" secondAttribute="width" multiplier="200:750" id="fv4-i3-Vzv"/>
+                <constraint firstItem="Squ-Df-dFD" firstAttribute="leading" secondItem="DOy-qf-ChB" secondAttribute="trailing" id="s4g-SO-20J"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="label1" destination="u0B-lU-v7K" id="On6-BI-mY0"/>
+                <outlet property="label2" destination="DOy-qf-ChB" id="4k3-vD-KDx"/>
+                <outlet property="label3" destination="Squ-Df-dFD" id="Z6F-rn-m2E"/>
+                <outlet property="label4" destination="UA0-cS-hCe" id="zmR-oR-mLy"/>
+            </connections>
+            <point key="canvasLocation" x="82.5" y="-276.5"/>
+        </view>
+    </objects>
+</document>

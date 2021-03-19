@@ -1,0 +1,45 @@
+//
+//  ZWStatiscalReportCompanyInfoTableViewCell.m
+//  Muck
+//
+//  Created by 张威 on 2018/7/29.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWStatiscalReportCompanyInfoTableViewCell.h"
+
+@interface ZWStatiscalReportCompanyInfoTableViewCell ()
+@property (weak, nonatomic) IBOutlet UILabel *licenseLab;
+
+@property (weak, nonatomic) IBOutlet UILabel *onlineStateLab;
+
+@end
+
+@implementation ZWStatiscalReportCompanyInfoTableViewCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self = [rTools getCellWithName:NSStringFromClass([self class])];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+    
+    self.licenseLab.font = kSystemFont(30);
+    self.onlineStateLab.font = kSystemFont(30);
+    
+    self.licenseLab.textColor = COLORWITHHEX(kColor_3A3D44);
+    self.onlineStateLab.textColor = COLORWITHHEX(kColor_5490EB);
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

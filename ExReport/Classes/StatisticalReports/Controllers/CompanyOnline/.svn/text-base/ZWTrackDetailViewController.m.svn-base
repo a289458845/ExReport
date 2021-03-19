@@ -1,0 +1,417 @@
+//
+//  ZWTrackDetailViewController.m
+//  Muck
+//
+//  Created by 张威 on 2018/8/27.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWTrackDetailViewController.h"
+#import <MAMapKit/MAMapKit.h>
+#import "ZWTrackDetailViewTopView.h"
+#import "ZWTrackDetailMiddleView.h"
+#import "ZWTrackDetailBottomView.h"
+
+#import "ZWHisLocPayModel.h"
+#import "ZWHisLocStatModel.h"
+
+#import "CustomMovingAnnotation.h"
+
+@interface ZWTrackDetailViewController ()
+<
+    MAMapViewDelegate,
+    ZWTrackDetailBottomViewDelegate
+>
+@property (nonatomic,strong) MAMapView *mapView;
+@property(nonatomic,strong)NSArray *trackPointArray;
+/**  气泡视图 */
+@property (nonatomic,strong)ZWTrackDetailViewTopView *topView;
+@property (strong, nonatomic)ZWTrackDetailMiddleView *middleView;
+@property (nonatomic,strong)ZWTrackDetailBottomView *bottomView;
+
+@property (strong, nonatomic) MAPointAnnotation *startAnnotation;
+@property (strong, nonatomic) MAPointAnnotation *destinationAnnotation;
+
+///车头方向跟随转动
+@property (nonatomic, strong) PausableMovingAnnotation *car;
+///全轨迹overlay
+@property (nonatomic, strong) MAPolyline *fullTraceLine;
+///走过轨迹的overlay
+@property (nonatomic, strong) MAPolyline *passedTraceLine;
+
+@property (nonatomic, assign) int passedTraceCoordIndex;
+
+@property (nonatomic, strong) NSArray *distanceArray;
+@property (nonatomic, assign) double sumDistance;
+
+@property (nonatomic, weak) MAAnnotationView *carView;
+
+@property (nonatomic, strong) NSMutableArray *carsArray;
+
+@property (nonatomic, strong) UIButton *pauseBtn;
+
+@end
+
+@implementation ZWTrackDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupNavigationTitleWithTitle:@"轨迹详情"];
+    
+    self.middleView.model = self.HisLocStatModel;
+    
+    [self loadData];
+}
+
+
+- (MAPointAnnotation *)startAnnotation{
+    if (!_startAnnotation) {
+        _startAnnotation = [[MAPointAnnotation alloc] init];
+        _startAnnotation.subtitle = @"startstart";
+        _startAnnotation.title = @"startstart";
+        [self.mapView addAnnotation:self.startAnnotation];
+    }
+    return _startAnnotation;
+}
+- (MAPointAnnotation *)destinationAnnotation
+{
+    if (!_destinationAnnotation) {
+        _destinationAnnotation = [[MAPointAnnotation alloc] init];
+        _destinationAnnotation.subtitle = @"endend";
+        _destinationAnnotation.title = @"endend";
+        [self.mapView addAnnotation:_destinationAnnotation];
+    }
+    return _destinationAnnotation;
+}
+- (void)loadData{
+    NSDictionary *params = @{
+                            @"VehicleNo":self.VehicleNo,
+                             @"StartDateTime":self.StartDateTime,
+                             @"EndDateTime":self.EndDateTime
+                             };
+    [[NetworkTool sharedNetworkTool] PostUrlString:URL_POST_HisLocPay parameters:params success:^(id  _Nullable responseObject) {
+        if ([responseObject[@"Code"] integerValue] == 0) {
+            [YJProgressHUD hide];
+            if ([responseObject[@"Data"] isKindOfClass:[NSArray class]]) {
+                NSMutableArray *temp = [NSMutableArray array];
+                for (NSDictionary *dict in responseObject[@"Data"]) {
+                    ZWHisLocPayModel *model = [ZWHisLocPayModel mj_objectWithKeyValues:dict];
+                    [temp addObject:model];
+                }
+                
+                NSLog(@"%zd",temp.count);
+                //逆序  从大到小
+//              self.trackPointArray = [[temp.copy reverseObjectEnumerator] allObjects];
+                self.trackPointArray = temp.copy;
+                if (self.trackPointArray.count>2) {
+                    self.topView.model = [self.trackPointArray firstObject];
+                    
+                    self.bottomView.count = self.trackPointArray.count;
+                    self.bottomView.progress = 0.0f;
+                    self.bottomView.startTime = self.topView.model.GpsDateHourTime;
+                    self.bottomView.endTime = [[self.trackPointArray lastObject] GpsDateHourTime];
+                    self.mapView.centerCoordinate = CLLocationCoordinate2DMake([self.topView.model.Lat doubleValue], [self.topView.model.Lon doubleValue]);
+                    //绘制轨迹
+                    [self initRouteWithArrar:self.trackPointArray];
+                    
+                    self.startAnnotation.coordinate = CLLocationCoordinate2DMake([[[self.trackPointArray firstObject] Lat] doubleValue], [[[self.trackPointArray firstObject] Lon] doubleValue]);
+                    if (self.trackPointArray.count>2) {
+                        self.destinationAnnotation.coordinate = CLLocationCoordinate2DMake([[[self.trackPointArray lastObject] Lat] doubleValue], [[[self.trackPointArray lastObject] Lon] doubleValue]);
+                    }
+                    
+                }
+            }
+        }else{
+            [YJProgressHUD showMessage:responseObject[@"Message"]];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+#pragma mark 地图
+- (MAMapView *)mapView{
+    if (!_mapView) {
+        _mapView = [MAMapView new];
+        _mapView.showsScale = NO;
+        _mapView.showsCompass = NO;
+        _mapView.zoomLevel = 13;
+        _mapView.rotateEnabled = NO;
+        _mapView.rotateCameraEnabled = NO;
+        _mapView.delegate = self;
+        _mapView.showsUserLocation = YES;
+        _mapView.showTraffic = NO;
+        _mapView.mapType = MAMapTypeStandard;
+        [self.view addSubview:_mapView];
+    }
+    return _mapView;
+}
+- (ZWTrackDetailViewTopView *)topView{
+    if (!_topView) {
+        _topView = [ZWTrackDetailViewTopView new];
+        [self.mapView addSubview:_topView];
+    }
+    return _topView;
+}
+
+- (ZWTrackDetailMiddleView *)middleView{
+    if (!_middleView) {
+        _middleView = [ZWTrackDetailMiddleView new];
+        [self.mapView addSubview:_middleView];
+    }
+    return _middleView;
+}
+- (ZWTrackDetailBottomView *)bottomView{
+    if (!_bottomView) {
+        _bottomView = [ZWTrackDetailBottomView new];
+        _bottomView.delegate = self;
+        [self.mapView addSubview:_bottomView];
+    }
+    return _bottomView;
+}
+
+- (void)setupUI{
+    [self.mapView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.view).offset(NavationBarHeight);
+        make.bottom.equalTo(self.view);
+    }];
+
+    
+}
+
+#pragma mark - ZWTrackDetailBottomView的代理
+- (void)zWTrackDetailBottomViewDidClickStartButtonWithIndex:(NSInteger)index
+{
+    [self play];
+}
+- (void)zWTrackDetailBottomViewDidClickEndButtonWithIndex:(NSInteger)index
+{
+    [self pause];
+}
+- (void)zWTrackDetailBottomViewDidClickPopButtonWithisShow:(BOOL)isShow
+{
+    if (isShow) {
+        [self.topView show];
+    }else{
+        [self.topView disMiss];
+    }
+}
+- (void)zWTrackDetailBottomViewBeginSliding
+{
+    self.bottomView.playButtonSelected = NO;
+    [self stop];
+}
+- (void)zWTrackDetailBottomViewDidSlidingToIndex:(NSInteger)index
+{
+  
+    self.bottomView.playButtonSelected = YES;
+    self.passedTraceCoordIndex = (int)index;
+    [self play];
+}
+
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
+{
+    if (annotation == self.car ) {
+        NSString *pointReuseIndetifier = @"pointReuseIndetifier1";
+        MAAnnotationView *annotationView = (MAAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndetifier];
+        if(!annotationView) {
+            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
+            annotationView.canShowCallout = YES;
+            UIImage *imge  =  [UIImage imageNamed:@"big_car_detail_online"];
+            annotationView.image =  imge;
+            if(annotation == self.car) {
+                self.carView = annotationView;
+            }
+        }
+        return annotationView;
+    }  else if([annotation isKindOfClass:[MAPointAnnotation class]]) {
+        NSString *pointReuseIndetifier = @"pointReuseIndetifier3";
+        MAAnnotationView *annotationView = (MAAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndetifier];
+        if (annotationView == nil) {
+            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
+            annotationView.canShowCallout = YES;
+        }
+        if ([annotation.title isEqualToString:@"route"]) {
+            annotationView.enabled = NO;
+            annotationView.image = [UIImage imageNamed:@"trackingPoints"];
+        }
+        
+        if ([annotation.title isEqualToString:@"startstart"]) {
+            annotationView.enabled = NO;
+            UIImage *image = [UIImage imageNamed:@"trackdetails_origin_icon"];
+            annotationView.image = image;
+            annotationView.centerOffset = CGPointMake(0, -image.size.height*0.5);
+        }
+        
+        if ([annotation.title isEqualToString:@"endend"]) {
+            annotationView.enabled = NO;
+            UIImage *image = [UIImage imageNamed:@"trackdetails_destination_icon"];
+            annotationView.image = image;
+            annotationView.centerOffset = CGPointMake(0, -image.size.height*0.5);
+        }
+        
+        [self.carView.superview bringSubviewToFront:self.carView];
+        return annotationView;
+    }
+    
+    return nil;
+}
+
+- (MAPolylineRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id<MAOverlay>)overlay {
+    if(overlay == self.fullTraceLine) {
+        MAPolylineRenderer *polylineView = [[MAPolylineRenderer alloc] initWithPolyline:overlay];
+        
+        polylineView.lineWidth   = 4.f;
+        polylineView.strokeColor = [UIColor colorWithRed:0 green:0.47 blue:1.0 alpha:0.9];
+        
+        return polylineView;
+    } else if(overlay == self.passedTraceLine) {
+        MAPolylineRenderer *polylineView = [[MAPolylineRenderer alloc] initWithPolyline:overlay];
+        
+        polylineView.lineWidth   = 4.f;
+        polylineView.strokeColor = [UIColor grayColor];
+        
+        return polylineView;
+    }
+    
+    return nil;
+}
+
+- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
+    NSLog(@"cooridnate :%f, %f", view.annotation.coordinate.latitude, view.annotation.coordinate.longitude);
+}
+
+#pragma mark life cycle
+
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+//
+//    self.mapView = [[MAMapView alloc] initWithFrame:self.view.bounds];
+//    self.mapView.delegate = self;
+//
+//    [self.view addSubview:self.mapView];
+//
+//    [
+//}
+//
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//}
+
+- (void)initRouteWithArrar:(NSArray *)array {
+    
+    
+    self.passedTraceCoordIndex = 0;
+    int count = (int)array.count;
+    CLLocationCoordinate2D s_coordsRout[count];
+    for (int i=0; i<array.count; i++) {
+        ZWHisLocPayModel *model = array[i];
+        s_coordsRout[i].latitude = [model.Lat doubleValue];
+        s_coordsRout[i].longitude = [model.Lon doubleValue];
+    }
+    
+
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:count];
+    for(int i = 0; i < count - 1; ++i) {
+        CLLocation *begin = [[CLLocation alloc] initWithLatitude:s_coordsRout[i].latitude longitude:s_coordsRout[i].longitude];
+        CLLocation *end = [[CLLocation alloc] initWithLatitude:s_coordsRout[i+1].latitude longitude:s_coordsRout[i+1].longitude];
+        CLLocationDistance distance = [end distanceFromLocation:begin];
+        [arr addObject:[NSNumber numberWithDouble:distance]];
+    }
+    
+    self.distanceArray = arr;
+    
+    
+    
+    self.fullTraceLine = [MAPolyline polylineWithCoordinates:s_coordsRout count:array.count];
+    [self.mapView addOverlay:self.fullTraceLine];
+
+    NSMutableArray * routeAnno = [NSMutableArray array];
+    for (int i = 0 ; i < count; i++) {
+        MAPointAnnotation * a = [[MAPointAnnotation alloc] init];
+        a.coordinate = s_coordsRout[i];
+        a.title = @"route";
+        [routeAnno addObject:a];
+    }
+    [self.mapView addAnnotations:routeAnno];
+    [self.mapView showAnnotations:routeAnno animated:NO];
+
+    self.car = [[PausableMovingAnnotation alloc] init];
+    self.car.title = @"Car";
+    [self.mapView addAnnotation:self.car];
+    [self.car setCoordinate:s_coordsRout[0]];
+
+    
+}
+
+#pragma mark - Action
+- (void)play{
+    self.car.isPaused = NO;
+    int count = (int)self.trackPointArray.count;
+    CLLocationCoordinate2D s_coordsRout[count];
+    ZWHisLocPayModel *model = [ZWHisLocPayModel new];
+    for (int j=0; j<self.trackPointArray.count; j++) {
+        model = self.trackPointArray[j];
+        s_coordsRout[j].latitude = [model.Lat doubleValue];
+        s_coordsRout[j].longitude = [model.Lon doubleValue];
+    }
+    if (self.passedTraceCoordIndex == count||self.passedTraceCoordIndex>count) {
+        [self.car setCoordinate:s_coordsRout[self.passedTraceCoordIndex-1]];
+        ZWHisLocPayModel *model = self.trackPointArray[count-1];
+        self.topView.model = model;
+        self.bottomView.startTime = model.GpsDateHourTime;
+        self.passedTraceCoordIndex = 0;
+        self.bottomView.playButtonSelected = NO;
+        return;
+    }
+    
+    [self.car setCoordinate:s_coordsRout[self.passedTraceCoordIndex]];
+    
+    Kweaself
+    for(int i = self.passedTraceCoordIndex+1; i < count; ++i) {
+        NSNumber *num = [self.distanceArray objectAtIndex:i - 1];
+        //添加移动动画
+        [self.car addMoveAnimationWithKeyCoordinates:&(s_coordsRout[i]) count:1 withDuration:num.doubleValue/3600. withName:nil completeCallback:^(BOOL isFinished) {
+            ZWHisLocPayModel *model = weakSelf.trackPointArray[i];
+            weakSelf.topView.model = model;
+            weakSelf.bottomView.startTime = model.GpsDateHourTime;
+            weakSelf.passedTraceCoordIndex = i;
+            weakSelf.bottomView.progress = i*1.f/(count-1);
+            if (i==count-1) {
+                weakSelf.passedTraceCoordIndex = 0;
+                weakSelf.bottomView.playButtonSelected = NO;
+            }
+        }];
+    }
+}
+- (void)pause{
+     self.car.isPaused = YES;
+}
+
+
+- (void)stop {
+    if(self.car.isPaused) {
+        [self pause];
+    }
+    for(MAAnnotationMoveAnimation *animation in [self.car allMoveAnimations]) {
+        [animation cancel];
+    }
+    self.car.movingDirection = 0;
+    
+    if(self.passedTraceLine) {
+        [self.mapView removeOverlay:self.passedTraceLine];
+        self.passedTraceLine = nil;
+    }
+}
+
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if ([self.middleView isHidden] == YES) {
+        [self.middleView show];
+    }else{
+        [self.middleView disMiss];
+    }
+}
+
+
+@end

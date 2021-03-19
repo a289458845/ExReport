@@ -1,0 +1,17 @@
+//
+//  ZWCompanyBasicInfoViewController.h
+//  Muck
+//
+//  Created by 张威 on 2018/8/21.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWBaseViewController.h"
+
+@interface ZWCompanyBasicInfoViewController : ZWBaseViewController
+@property(assign, nonatomic)NSInteger Type;
+@property (strong, nonatomic)NSArray *EnterpriseId;
+@property (copy, nonatomic)NSString *BeginDate;
+@property (copy, nonatomic)NSString *EndDate;
+@property (copy, nonatomic)NSString *EnterpriseName;
+@end

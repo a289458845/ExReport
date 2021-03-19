@@ -1,0 +1,196 @@
+//
+//  ZWCarInfoViewController.m
+//  Muck
+//
+//  Created by 张威 on 2018/7/29.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWCarInfoViewController.h"
+#import "UIImage+Color.h"
+#import "ZWCarBasicInfoViewController.h"
+#import "ZWCarAlarmInfoViewController.h"
+#import "ZWCarHistoricalTrackViewController.h"
+@interface ZWCarInfoViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+
+@property (strong, nonatomic) UIButton *baseInfoButton;
+@property (nonatomic, strong) UIButton *alarmInfoButton;
+@property (nonatomic, strong) UIButton *historyPathButton;
+@property (nonatomic, weak) UIButton *selectedButton;
+
+
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UICollectionViewFlowLayout *layout;
+
+@property (nonatomic, strong) ZWCarBasicInfoViewController *baseInfoVc;
+@property (nonatomic, strong) ZWCarAlarmInfoViewController *alarmInfoVc;
+/**<#typeName#>*/
+@property (strong, nonatomic)ZWCarHistoricalTrackViewController *trackInfoVc;
+
+@end
+
+@implementation ZWCarInfoViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupNavigationTitleWithTitle:self.VehicleNo];
+    
+    self.baseInfoVc = [[ZWCarBasicInfoViewController alloc] init];
+    self.baseInfoVc.PhoneNum = self.PhoneNum;
+    
+    self.alarmInfoVc = [[ZWCarAlarmInfoViewController alloc] init];
+    self.alarmInfoVc.VehicleNo = self.VehicleNo;
+    
+    self.trackInfoVc = [[ZWCarHistoricalTrackViewController alloc]init];
+    self.trackInfoVc.VehicleNo = self.VehicleNo;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.view addSubview:[self topVieWihtFrame:CGRectMake(0, safeAreaTopHeight, kScreenWidth, 44)]];
+    [self.view addSubview:self.collectionView];
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([self class]) forIndexPath:indexPath];
+    if (indexPath.item == 0) {
+        [cell.contentView addSubview:self.baseInfoVc.view];
+    }
+    if (indexPath.item == 1) {
+        [cell.contentView addSubview:self.alarmInfoVc.view];
+    }
+    if (indexPath.item == 2) {
+        [cell.contentView addSubview:self.trackInfoVc.view];
+    }
+    return cell;
+}
+
+#pragma mark - action
+
+- (void)topViewAction:(UIButton *)sender
+{
+    if (sender == self.selectedButton) {
+        return;
+    }
+    sender.selected = YES;
+    self.selectedButton.selected = NO;
+    self.selectedButton = sender;
+    
+    if (sender == self.baseInfoButton) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    }
+    if (sender == self.alarmInfoButton) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    }
+    if (sender == self.historyPathButton) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:2 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    }
+    
+}
+
+#pragma mark - lazy
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView) {
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, safeAreaTopHeight+44, kScreenWidth, kScreenHeight-safeAreaTopHeight-44) collectionViewLayout:self.layout];
+        _collectionView.dataSource = self;
+        _collectionView.delegate = self;
+        _collectionView.pagingEnabled = YES;
+        _collectionView.scrollEnabled = NO;
+        _collectionView.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([self class])];
+    }
+    return _collectionView;
+}
+
+- (UICollectionViewFlowLayout *)layout
+{
+    if (!_layout) {
+        _layout = [[UICollectionViewFlowLayout alloc] init];
+        _layout.itemSize = CGSizeMake(kScreenWidth, kScreenHeight-safeAreaTopHeight-44);
+        _layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        _layout.minimumLineSpacing = 0;
+        _layout.minimumInteritemSpacing = 0;
+    }
+    return _layout;
+}
+
+
+- (UIView *)topVieWihtFrame:(CGRect)frame
+{
+    UIView *topView = [[UIView alloc] initWithFrame:frame];
+    CGFloat sideMargin = 16;
+    CGFloat margin = 20;
+    CGFloat width = (kScreenWidth-sideMargin*2-margin*2)/3;
+    self.baseInfoButton = [[UIButton alloc] initWithFrame:CGRectMake(sideMargin, 7, width, 30)];
+    [self.baseInfoButton setTitle:@"基本信息" forState:UIControlStateNormal];
+    self.baseInfoButton.titleLabel.font = kSystemFont(30);
+    [self.baseInfoButton setTitleColor:COLORWITHHEX(kColor_3A3D44) forState:UIControlStateNormal];
+    [self.baseInfoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [self.baseInfoButton setBackgroundImage:[UIImage imageWithColor:COLORWITHHEX(kColor_3A62AC)] forState:UIControlStateSelected];
+    [self.baseInfoButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    self.baseInfoButton.layer.cornerRadius = 15;
+    self.baseInfoButton.layer.masksToBounds = YES;
+    [topView addSubview:self.baseInfoButton];
+    
+    self.alarmInfoButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.baseInfoButton.frame)+margin, 7, width, 30)];
+    [self.alarmInfoButton setTitle:@"报警信息" forState:UIControlStateNormal];
+    self.alarmInfoButton.titleLabel.font = kSystemFont(30);
+    [self.alarmInfoButton setTitleColor:COLORWITHHEX(kColor_3A3D44) forState:UIControlStateNormal];
+    [self.alarmInfoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [self.alarmInfoButton setBackgroundImage:[UIImage imageWithColor:COLORWITHHEX(kColor_3A62AC)] forState:UIControlStateSelected];
+    [self.alarmInfoButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    self.alarmInfoButton.layer.cornerRadius = 15;
+    self.alarmInfoButton.layer.masksToBounds = YES;
+    [topView addSubview:self.alarmInfoButton];
+    
+    self.historyPathButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.alarmInfoButton.frame)+margin, 7, width, 30)];
+    [self.historyPathButton setTitle:@"历史轨迹" forState:UIControlStateNormal];
+    self.historyPathButton.titleLabel.font = kSystemFont(30);
+    [self.historyPathButton setTitleColor:COLORWITHHEX(kColor_3A3D44) forState:UIControlStateNormal];
+    [self.historyPathButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [self.historyPathButton setBackgroundImage:[UIImage imageWithColor:COLORWITHHEX(kColor_3A62AC)] forState:UIControlStateSelected];
+    [self.historyPathButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    self.historyPathButton.layer.cornerRadius = 15;
+    self.historyPathButton.layer.masksToBounds = YES;
+    [topView addSubview:self.historyPathButton];
+    
+    [self.baseInfoButton addTarget:self action:@selector(topViewAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.alarmInfoButton addTarget:self action:@selector(topViewAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.historyPathButton addTarget:self action:@selector(topViewAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.baseInfoButton.selected = YES;
+    self.selectedButton = self.baseInfoButton;
+    
+    return topView;
+    
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

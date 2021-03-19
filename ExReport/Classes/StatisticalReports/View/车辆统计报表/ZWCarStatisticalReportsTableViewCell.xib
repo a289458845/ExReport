@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="82" id="KGk-i7-Jjw" customClass="ZWCarStatisticalReportsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="81.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqQ-cE-nv7">
+                        <rect key="frame" x="0.0" y="30" width="42.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="企业名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAt-F3-bOM">
+                        <rect key="frame" x="42.5" y="30.5" width="85.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车牌号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvD-PJ-AFa">
+                        <rect key="frame" x="128" y="30.5" width="85.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFc-IC-chp">
+                        <rect key="frame" x="256" y="30.5" width="64" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="commonreport_thehighest_first_icon" translatesAutoresizingMaskIntoConstraints="NO" id="yUU-eb-wpv">
+                        <rect key="frame" x="11.5" y="27" width="20" height="27"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSe-hU-aYm">
+                        <rect key="frame" x="213.5" y="30.5" width="42.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="zSe-hU-aYm" firstAttribute="leading" secondItem="yvD-PJ-AFa" secondAttribute="trailing" id="7sD-3F-R17"/>
+                    <constraint firstItem="SAt-F3-bOM" firstAttribute="leading" secondItem="rqQ-cE-nv7" secondAttribute="trailing" id="8og-A0-nq0"/>
+                    <constraint firstItem="yvD-PJ-AFa" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="200:750" id="9Hb-bW-eUk"/>
+                    <constraint firstItem="zSe-hU-aYm" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="100:750" id="BBS-lE-Tuy"/>
+                    <constraint firstItem="rqQ-cE-nv7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibc-lc-GVj"/>
+                    <constraint firstItem="SAt-F3-bOM" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="200:750" id="PXF-eg-toy"/>
+                    <constraint firstItem="rqQ-cE-nv7" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="100:750" id="TWP-o9-5os"/>
+                    <constraint firstItem="yvD-PJ-AFa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fow-BE-onu"/>
+                    <constraint firstItem="zSe-hU-aYm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hed-OL-R3X"/>
+                    <constraint firstItem="rqQ-cE-nv7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="iHR-QK-flm"/>
+                    <constraint firstItem="yvD-PJ-AFa" firstAttribute="leading" secondItem="SAt-F3-bOM" secondAttribute="trailing" id="kcx-47-19A"/>
+                    <constraint firstItem="CFc-IC-chp" firstAttribute="leading" secondItem="zSe-hU-aYm" secondAttribute="trailing" id="m0X-PJ-Inz"/>
+                    <constraint firstItem="CFc-IC-chp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uly-Pt-c8d"/>
+                    <constraint firstItem="yUU-eb-wpv" firstAttribute="centerX" secondItem="rqQ-cE-nv7" secondAttribute="centerX" id="vf0-pi-TIj"/>
+                    <constraint firstItem="rqQ-cE-nv7" firstAttribute="centerY" secondItem="yUU-eb-wpv" secondAttribute="centerY" id="weh-pF-Vco"/>
+                    <constraint firstAttribute="trailing" secondItem="CFc-IC-chp" secondAttribute="trailing" id="xhv-x9-r6W"/>
+                    <constraint firstItem="SAt-F3-bOM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zUN-dn-9Mu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="companyLab" destination="SAt-F3-bOM" id="4N3-Pb-R38"/>
+                <outlet property="licenseLab" destination="yvD-PJ-AFa" id="Tc5-mu-x6u"/>
+                <outlet property="onlineRateLab" destination="zSe-hU-aYm" id="nK5-pO-3QK"/>
+                <outlet property="onlineTimeLab" destination="CFc-IC-chp" id="Faz-h3-uTP"/>
+                <outlet property="rankIcon" destination="yUU-eb-wpv" id="5Co-6J-8uJ"/>
+                <outlet property="rankLab" destination="rqQ-cE-nv7" id="nd3-uv-Ffb"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="123"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="commonreport_thehighest_first_icon" width="20" height="27"/>
+    </resources>
+</document>

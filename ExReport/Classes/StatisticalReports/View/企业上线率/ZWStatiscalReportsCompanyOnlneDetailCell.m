@@ -1,0 +1,87 @@
+//
+//  ZWStatiscalReportsCompanyOnlneDetailCell.m
+//  Muck
+//
+//  Created by 张威 on 2018/7/29.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWStatiscalReportsCompanyOnlneDetailCell.h"
+#import "ZWAreaViolationRankModel.h"
+#import "ZWCompanyOnlineRateModel.h"
+
+@interface ZWStatiscalReportsCompanyOnlneDetailCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *lab1;
+@property (weak, nonatomic) IBOutlet UILabel *lab2;
+
+
+@end
+
+@implementation ZWStatiscalReportsCompanyOnlneDetailCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self = [rTools getCellWithName:NSStringFromClass([self class])];
+    }
+    return self;
+}
+
+- (void)setType:(ZWStatiscalReportsDetailCellType)type
+{
+    _type = type;
+    switch (type) {
+        case ZWStatiscalReportsDetailCellCompanyOnline:
+        {
+            self.lab1.text = @"已装设备车辆总数(辆)：";
+            self.lab2.text = @"上线车辆(辆)：";
+        }
+            break;
+        case ZWStatiscalReportsDetailCellAreaViolationRate:
+        {
+            self.lab1.text = @"违规时长(分钟)：";
+            self.lab2.text = @"里程(公里)：";
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)setModel:(ZWAreaViolationRankModel *)model
+{
+    _model = model;
+    
+    self.lab1.text = [NSString stringWithFormat:@"违规时长(分钟)：%@",model.TotalMins];
+    self.lab2.text = [NSString stringWithFormat:@"里程(公里)：%@",model.TotalMileage];
+}
+
+
+- (void)setRateModel:(ZWCompanyOnlineRateModel *)rateModel{
+    _rateModel = rateModel;
+   
+    self.lab1.text = [NSString stringWithFormat:@"已装设备车辆总数(辆)：%@",rateModel.TotalCount];
+    self.lab2.text = [NSString stringWithFormat:@"上线车辆(辆)：%@",rateModel.OnlineCount];
+    
+}
+- (void)awakeFromNib {
+    [super awakeFromNib];
+
+    
+    self.contentView.backgroundColor = COLORWITHHEX(kColor_EDF0F4);
+    
+    self.lab1.font = kSystemFont(28);
+    self.lab1.textColor = COLORWITHHEX(kColor_3A3D44);
+    self.lab2.font = kSystemFont(28);
+    self.lab2.textColor = COLORWITHHEX(kColor_3A3D44);
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="h6T-bG-QpE" customClass="ZWCompanyStatisticalReportsSectionHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="排名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9y9-eD-6B4">
+                    <rect key="frame" x="0.0" y="39" width="62.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="区名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQO-Ut-Pwm">
+                    <rect key="frame" x="62.5" y="39" width="100" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="企业" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0O-q4-hp3">
+                    <rect key="frame" x="162.5" y="39" width="112.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出土量(立方)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQ8-WC-C7d">
+                    <rect key="frame" x="275" y="39" width="100" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="oQO-Ut-Pwm" firstAttribute="width" secondItem="h6T-bG-QpE" secondAttribute="width" multiplier="200:750" id="0y6-XO-3kl"/>
+                <constraint firstItem="oQO-Ut-Pwm" firstAttribute="centerY" secondItem="h6T-bG-QpE" secondAttribute="centerY" id="7N0-Dw-DM0"/>
+                <constraint firstItem="i0O-q4-hp3" firstAttribute="width" secondItem="h6T-bG-QpE" secondAttribute="width" multiplier="225:750" id="AJa-QA-wRt"/>
+                <constraint firstItem="qQ8-WC-C7d" firstAttribute="centerY" secondItem="h6T-bG-QpE" secondAttribute="centerY" id="BDF-93-feh"/>
+                <constraint firstItem="9y9-eD-6B4" firstAttribute="leading" secondItem="h6T-bG-QpE" secondAttribute="leading" id="Cud-cg-lhv"/>
+                <constraint firstItem="oQO-Ut-Pwm" firstAttribute="leading" secondItem="9y9-eD-6B4" secondAttribute="trailing" id="CzQ-Ag-YpU"/>
+                <constraint firstItem="i0O-q4-hp3" firstAttribute="centerY" secondItem="h6T-bG-QpE" secondAttribute="centerY" id="PaK-dJ-WM1"/>
+                <constraint firstItem="qQ8-WC-C7d" firstAttribute="leading" secondItem="i0O-q4-hp3" secondAttribute="trailing" id="Y5i-jr-A9X"/>
+                <constraint firstItem="9y9-eD-6B4" firstAttribute="width" secondItem="h6T-bG-QpE" secondAttribute="width" multiplier="125:750" id="iT1-qe-a5P"/>
+                <constraint firstItem="9y9-eD-6B4" firstAttribute="centerY" secondItem="h6T-bG-QpE" secondAttribute="centerY" id="oxh-Nl-lhJ"/>
+                <constraint firstItem="i0O-q4-hp3" firstAttribute="leading" secondItem="oQO-Ut-Pwm" secondAttribute="trailing" id="rB1-kA-A8o"/>
+                <constraint firstAttribute="trailing" secondItem="qQ8-WC-C7d" secondAttribute="trailing" id="tOM-FF-SLu"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="areaLab" destination="oQO-Ut-Pwm" id="xDq-s7-qOa"/>
+                <outlet property="companyLab" destination="i0O-q4-hp3" id="Wz0-Ao-G1C"/>
+                <outlet property="dataLab" destination="qQ8-WC-C7d" id="4Un-an-1z4"/>
+                <outlet property="rankLab" destination="9y9-eD-6B4" id="9Sg-wO-Chc"/>
+            </connections>
+            <point key="canvasLocation" x="-57.5" y="-188.5"/>
+        </view>
+    </objects>
+</document>

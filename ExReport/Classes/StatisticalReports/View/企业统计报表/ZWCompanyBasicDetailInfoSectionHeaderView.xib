@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="oZZ-bE-FuY" customClass="ZWCompanyBasicDetailInfoSectionHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="143"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t2R-Lx-UtE">
+                    <rect key="frame" x="0.0" y="56.5" width="94" height="30"/>
+                    <state key="normal" title="全部">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="allBtnClick:" destination="oZZ-bE-FuY" eventType="touchUpInside" id="pvS-ar-gnJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFr-mT-Hw4">
+                    <rect key="frame" x="94" y="56" width="93.5" height="30"/>
+                    <state key="normal" title="车辆未密闭">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="allBtnClick:" destination="oZZ-bE-FuY" eventType="touchUpInside" id="g8X-Rx-bit"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0O-Dk-Jsr">
+                    <rect key="frame" x="187.5" y="56.5" width="94" height="30"/>
+                    <state key="normal" title="车辆超速">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="allBtnClick:" destination="oZZ-bE-FuY" eventType="touchUpInside" id="ybE-By-OPK"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOQ-rF-1L8">
+                    <rect key="frame" x="281.5" y="56.5" width="93.5" height="30"/>
+                    <state key="normal" title="车辆超载">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="allBtnClick:" destination="oZZ-bE-FuY" eventType="touchUpInside" id="vve-6g-JTh"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67c-JH-Vk3">
+                    <rect key="frame" x="0.0" y="141" width="94" height="2"/>
+                    <color key="backgroundColor" red="0.28362903249999999" green="0.48372974070000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="olf-2Z-3tF"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="67c-JH-Vk3" firstAttribute="width" secondItem="t2R-Lx-UtE" secondAttribute="width" id="AYv-QN-arQ"/>
+                <constraint firstItem="OOQ-rF-1L8" firstAttribute="centerY" secondItem="oZZ-bE-FuY" secondAttribute="centerY" id="DIG-XU-OGI"/>
+                <constraint firstItem="t2R-Lx-UtE" firstAttribute="leading" secondItem="oZZ-bE-FuY" secondAttribute="leading" id="Ed3-ek-Ba9"/>
+                <constraint firstItem="67c-JH-Vk3" firstAttribute="leading" secondItem="oZZ-bE-FuY" secondAttribute="leading" id="GB1-u6-Oan"/>
+                <constraint firstItem="l0O-Dk-Jsr" firstAttribute="height" secondItem="t2R-Lx-UtE" secondAttribute="height" id="KSK-GR-Pzz"/>
+                <constraint firstItem="t2R-Lx-UtE" firstAttribute="centerY" secondItem="oZZ-bE-FuY" secondAttribute="centerY" id="TNI-nh-EXD"/>
+                <constraint firstItem="OOQ-rF-1L8" firstAttribute="height" secondItem="t2R-Lx-UtE" secondAttribute="height" id="Tb1-dD-TlE"/>
+                <constraint firstItem="l0O-Dk-Jsr" firstAttribute="leading" secondItem="fFr-mT-Hw4" secondAttribute="trailing" id="VuX-Le-qQz"/>
+                <constraint firstAttribute="trailing" secondItem="OOQ-rF-1L8" secondAttribute="trailing" id="WYW-ki-PbD"/>
+                <constraint firstItem="l0O-Dk-Jsr" firstAttribute="width" secondItem="t2R-Lx-UtE" secondAttribute="width" id="Ww9-F0-nai"/>
+                <constraint firstItem="fFr-mT-Hw4" firstAttribute="centerY" secondItem="oZZ-bE-FuY" secondAttribute="centerY" id="Z2f-hb-GZ8"/>
+                <constraint firstItem="fFr-mT-Hw4" firstAttribute="leading" secondItem="t2R-Lx-UtE" secondAttribute="trailing" id="aao-QI-DRN"/>
+                <constraint firstItem="fFr-mT-Hw4" firstAttribute="leading" secondItem="t2R-Lx-UtE" secondAttribute="trailing" id="cED-nu-yiW"/>
+                <constraint firstItem="fFr-mT-Hw4" firstAttribute="width" secondItem="t2R-Lx-UtE" secondAttribute="width" id="gip-E2-g2w"/>
+                <constraint firstItem="fFr-mT-Hw4" firstAttribute="height" secondItem="t2R-Lx-UtE" secondAttribute="height" id="kVw-Td-Mai"/>
+                <constraint firstItem="l0O-Dk-Jsr" firstAttribute="leading" secondItem="fFr-mT-Hw4" secondAttribute="trailing" id="rPT-Ya-D53"/>
+                <constraint firstAttribute="bottom" secondItem="67c-JH-Vk3" secondAttribute="bottom" id="rSe-ql-1xb"/>
+                <constraint firstItem="OOQ-rF-1L8" firstAttribute="leading" secondItem="l0O-Dk-Jsr" secondAttribute="trailing" id="uA7-W3-xLE"/>
+                <constraint firstItem="OOQ-rF-1L8" firstAttribute="width" secondItem="t2R-Lx-UtE" secondAttribute="width" id="uuc-XW-6BD"/>
+                <constraint firstItem="l0O-Dk-Jsr" firstAttribute="centerY" secondItem="oZZ-bE-FuY" secondAttribute="centerY" id="yn2-hQ-yj4"/>
+                <constraint firstItem="OOQ-rF-1L8" firstAttribute="leading" secondItem="l0O-Dk-Jsr" secondAttribute="trailing" id="zM1-Gp-Bjp"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="allBtn" destination="t2R-Lx-UtE" id="478-gN-sGz"/>
+                <outlet property="carOverloadBtn" destination="OOQ-rF-1L8" id="Z3p-ua-DUw"/>
+                <outlet property="carOverspeedBtn" destination="l0O-Dk-Jsr" id="v76-hi-Wsp"/>
+                <outlet property="lineView" destination="67c-JH-Vk3" id="wzR-eL-STN"/>
+                <outlet property="unClosenessBtn" destination="fFr-mT-Hw4" id="qpY-vY-GFx"/>
+            </connections>
+            <point key="canvasLocation" x="-1.5" y="-267.5"/>
+        </view>
+    </objects>
+</document>

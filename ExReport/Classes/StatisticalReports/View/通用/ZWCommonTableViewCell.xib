@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="71" id="KGk-i7-Jjw" customClass="ZWCommonTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="384" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="384" height="70.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="commonreport_thehighest_first_icon" translatesAutoresizingMaskIntoConstraints="NO" id="8U1-5k-VGv">
+                        <rect key="frame" x="22" y="22" width="20" height="27"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="江夏区" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i49-r2-S2r">
+                        <rect key="frame" x="64" y="25" width="102.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昌帝" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hP7-Fc-9jM">
+                        <rect key="frame" x="166.5" y="24.5" width="115" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5P-Kk-6Uw">
+                        <rect key="frame" x="0.0" y="25" width="64" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzS-6y-3ji">
+                        <rect key="frame" x="166.5" y="0.0" width="115" height="70.5"/>
+                        <connections>
+                            <action selector="companyClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6Dz-UK-Onu"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98.12%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFa-zB-9Wt">
+                        <rect key="frame" x="281.5" y="25" width="102.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="8U1-5k-VGv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="52n-52-yyr"/>
+                    <constraint firstItem="v5P-Kk-6Uw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="6ni-lp-Pgw"/>
+                    <constraint firstItem="uzS-6y-3ji" firstAttribute="leading" secondItem="hP7-Fc-9jM" secondAttribute="leading" id="NUj-fn-Vmq"/>
+                    <constraint firstAttribute="trailing" secondItem="RFa-zB-9Wt" secondAttribute="trailing" id="Rmg-Ge-kaz"/>
+                    <constraint firstItem="uzS-6y-3ji" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="RzV-6k-Ncp"/>
+                    <constraint firstItem="i49-r2-S2r" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="U0k-L4-L0c"/>
+                    <constraint firstAttribute="bottom" secondItem="uzS-6y-3ji" secondAttribute="bottom" id="WFP-BH-9aW"/>
+                    <constraint firstItem="hP7-Fc-9jM" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="225:750" id="Wzt-zA-obf"/>
+                    <constraint firstItem="RFa-zB-9Wt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eoy-tm-9MT"/>
+                    <constraint firstItem="v5P-Kk-6Uw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="grN-M4-loV"/>
+                    <constraint firstItem="hP7-Fc-9jM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hTs-sP-fS9"/>
+                    <constraint firstItem="v5P-Kk-6Uw" firstAttribute="centerX" secondItem="8U1-5k-VGv" secondAttribute="centerX" id="qbV-xH-J64"/>
+                    <constraint firstItem="v5P-Kk-6Uw" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="125:750" id="rdK-t0-H09"/>
+                    <constraint firstItem="i49-r2-S2r" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="200:750" id="tyr-JD-aGL"/>
+                    <constraint firstItem="i49-r2-S2r" firstAttribute="leading" secondItem="v5P-Kk-6Uw" secondAttribute="trailing" id="uaX-o0-lRE"/>
+                    <constraint firstItem="RFa-zB-9Wt" firstAttribute="leading" secondItem="hP7-Fc-9jM" secondAttribute="trailing" id="vyp-9y-LdP"/>
+                    <constraint firstItem="uzS-6y-3ji" firstAttribute="trailing" secondItem="hP7-Fc-9jM" secondAttribute="trailing" id="w5m-eN-bXS"/>
+                    <constraint firstItem="hP7-Fc-9jM" firstAttribute="leading" secondItem="i49-r2-S2r" secondAttribute="trailing" id="yGL-nL-zas"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="areaLab" destination="i49-r2-S2r" id="s23-zh-tJo"/>
+                <outlet property="companyLab" destination="hP7-Fc-9jM" id="LqK-BA-42n"/>
+                <outlet property="onlineRateLab" destination="RFa-zB-9Wt" id="3Ej-nY-8gZ"/>
+                <outlet property="rankIcon" destination="8U1-5k-VGv" id="rkY-rF-JUU"/>
+                <outlet property="rankLab" destination="v5P-Kk-6Uw" id="vQm-M3-lzO"/>
+            </connections>
+            <point key="canvasLocation" x="81" y="109.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="commonreport_thehighest_first_icon" width="20" height="27"/>
+    </resources>
+</document>

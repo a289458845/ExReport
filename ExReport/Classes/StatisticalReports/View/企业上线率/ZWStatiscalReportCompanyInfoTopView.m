@@ -1,0 +1,47 @@
+//
+//  ZWStatiscalReportCompanyInfoTopView.m
+//  Muck
+//
+//  Created by 张威 on 2018/7/29.
+//  Copyright © 2018年 张威. All rights reserved.
+//
+
+#import "ZWStatiscalReportCompanyInfoTopView.h"
+
+@interface ZWStatiscalReportCompanyInfoTopView ()
+
+@property (weak, nonatomic) IBOutlet UILabel *companyNameLab;
+@property (weak, nonatomic) IBOutlet UILabel *legalLab;
+@property (weak, nonatomic) IBOutlet UILabel *telLab;
+@property (weak, nonatomic) IBOutlet UILabel *companyAddr;
+@property (weak, nonatomic) IBOutlet UILabel *parkAddrLab;
+@property (weak, nonatomic) IBOutlet UILabel *allCarLab;
+
+
+
+@end
+
+@implementation ZWStatiscalReportCompanyInfoTopView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        self = [rTools getCellWithName:NSStringFromClass([self class])];
+    }
+    return self;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    self.companyNameLab.font = kSystemFont(30);
+    self.legalLab.font = kSystemFont(30);
+    self.telLab.font = kSystemFont(30);
+    self.companyAddr.font = kSystemFont(30);
+    self.parkAddrLab.font = kSystemFont(30);
+    self.allCarLab.font = kSystemFont(30);
+    
+}
+
+@end

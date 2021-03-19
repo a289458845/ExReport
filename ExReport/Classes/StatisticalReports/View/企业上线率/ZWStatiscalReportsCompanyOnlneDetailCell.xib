@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="73" id="KGk-i7-Jjw" customClass="ZWStatiscalReportsCompanyOnlneDetailCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="72.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="已装设备车辆总数(辆)：100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euq-v1-gau">
+                        <rect key="frame" x="50" y="10" width="214" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="上线车辆(辆)：90" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="216-65-pLY">
+                        <rect key="frame" x="50" y="41" width="137" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.92941176470588238" green="0.66666666666666663" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="216-65-pLY" firstAttribute="leading" secondItem="euq-v1-gau" secondAttribute="leading" id="5IQ-i2-e9S"/>
+                    <constraint firstItem="216-65-pLY" firstAttribute="top" secondItem="euq-v1-gau" secondAttribute="bottom" constant="10" id="9mB-IH-G7I"/>
+                    <constraint firstItem="euq-v1-gau" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BuT-oO-PFR"/>
+                    <constraint firstItem="euq-v1-gau" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="U1k-wq-6q0"/>
+                    <constraint firstAttribute="bottom" secondItem="216-65-pLY" secondAttribute="bottom" constant="10" id="b0y-He-bp4"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="216-65-pLY" secondAttribute="trailing" constant="10" id="eD2-yV-a2S"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="euq-v1-gau" secondAttribute="trailing" constant="10" id="f1p-az-zec"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lab1" destination="euq-v1-gau" id="56q-ca-ctP"/>
+                <outlet property="lab2" destination="216-65-pLY" id="KTx-O7-TZt"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="110.5"/>
+        </tableViewCell>
+    </objects>
+</document>

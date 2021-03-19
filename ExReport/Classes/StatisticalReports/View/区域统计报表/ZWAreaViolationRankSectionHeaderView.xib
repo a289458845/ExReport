@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="xGO-SM-FJM" customClass="ZWAreaViolationRankSectionHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="排名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDJ-xB-foL">
+                    <rect key="frame" x="0.0" y="32" width="75" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="违规比率(未密闭时长/里程)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="px0-75-btu">
+                    <rect key="frame" x="200" y="22.5" width="175" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="区名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an9-Jc-KyN">
+                    <rect key="frame" x="75" y="32" width="125" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.2274509804" green="0.23921568630000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="aDJ-xB-foL" firstAttribute="centerY" secondItem="xGO-SM-FJM" secondAttribute="centerY" id="9YP-mA-y7o"/>
+                <constraint firstItem="aDJ-xB-foL" firstAttribute="leading" secondItem="xGO-SM-FJM" secondAttribute="leading" id="FHc-yW-a5A"/>
+                <constraint firstItem="px0-75-btu" firstAttribute="centerY" secondItem="xGO-SM-FJM" secondAttribute="centerY" id="Gwm-3c-W6a"/>
+                <constraint firstItem="an9-Jc-KyN" firstAttribute="width" secondItem="xGO-SM-FJM" secondAttribute="width" multiplier="250:750" id="MhC-Ug-HE8"/>
+                <constraint firstItem="an9-Jc-KyN" firstAttribute="centerY" secondItem="xGO-SM-FJM" secondAttribute="centerY" id="Oxu-Qz-SJv"/>
+                <constraint firstItem="px0-75-btu" firstAttribute="leading" secondItem="an9-Jc-KyN" secondAttribute="trailing" id="QYe-s7-2HE"/>
+                <constraint firstItem="aDJ-xB-foL" firstAttribute="width" secondItem="xGO-SM-FJM" secondAttribute="width" multiplier="150:750" id="uWv-NF-BEP"/>
+                <constraint firstAttribute="trailing" secondItem="px0-75-btu" secondAttribute="trailing" id="wfu-Ya-Nxt"/>
+                <constraint firstItem="an9-Jc-KyN" firstAttribute="leading" secondItem="aDJ-xB-foL" secondAttribute="trailing" id="z92-Bs-Vq8"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="areaLab" destination="an9-Jc-KyN" id="bcb-Jg-wx6"/>
+                <outlet property="dataLab" destination="px0-75-btu" id="AfU-EL-0Zg"/>
+                <outlet property="rankLab" destination="aDJ-xB-foL" id="sIv-Oe-OD1"/>
+            </connections>
+            <point key="canvasLocation" x="-49.5" y="-149.5"/>
+        </view>
+    </objects>
+</document>
