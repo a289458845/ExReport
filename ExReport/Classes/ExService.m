@@ -36,7 +36,7 @@ static ExService * _service ;
 {
     NSString *path = [kDocPath stringByAppendingPathComponent:@"region.data"];
     NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if (array.count < 0) {
+    if (!array) {
         [self loadRegionData];
     }
 }

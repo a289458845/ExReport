@@ -29,8 +29,11 @@
 
 +(id)getCellWithName:(NSString *)cellName
 {
-    
-    return  [[[NSBundle bundleForClass:[self class]]loadNibNamed:cellName owner:nil options:nil]firstObject];
+
+    NSBundle * bd = [NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"ExReport" ofType:@"bundle"]];
+   id xib = [[bd loadNibNamed:cellName owner:nil options:nil]firstObject];
+    return xib;
+//    return  [[[NSBundle bundleForClass:[self class]]loadNibNamed:cellName owner:nil options:nil]firstObject];
 }
 
 +(NSString *)appendNetworkImageUrl:(NSString *)imagePath
@@ -45,15 +48,6 @@
     NSString *statisticalPathString = [kDocPath stringByAppendingPathComponent:@"filter.plist"];
     NSString *statisticalSectionPathString = [kDocPath stringByAppendingPathComponent:@"filterSection.plist"];
     
-    //    [source enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    //        if ([obj[@"Name"] isEqualToString:@"数据应用"]) {
-    //数据应用
-    //            NSArray *dateMeum = obj[@"childMenu"];
-    
-    //        [source enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    //                if ([obj[@"Name"] isEqualToString:@"统计报表"]) {
-    
-    //                    NSArray *statisticalMeum =  obj[@"childMenu"];
     NSArray *statisticalMeum =  source;
     NSMutableArray *filterArray = [NSMutableArray array];
     NSMutableArray *filterSectionArray = [NSMutableArray array];

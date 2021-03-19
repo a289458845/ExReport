@@ -22,7 +22,7 @@ PODS:
     - AFNetworking/NSURLSession
   - ExNetwork (0.1.0):
     - AFNetworking (~> 2.6.3)
-  - ExReport (0.1.0):
+  - ExReport (0.1.1):
     - ExNetwork
     - Masonry
     - MBProgressHUD (~> 1.1.0)
@@ -65,7 +65,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   ExNetwork: a4f3b2a1875d5adefa5772cabb79c634edd524c7
-  ExReport: 523af0cab5ebb68ec78fbd45fb070b03896cc65f
+  ExReport: b56ca8f7a443355e9b0fb8e7db4a7a8b78341fbe
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
@@ -75,4 +75,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 95ab3cb1758079a0e7370a3933b73e6f884077b3
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

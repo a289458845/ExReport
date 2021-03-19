@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ExReport'
-    s.version          = '0.1.1'
+    s.version          = '0.1.2'
     s.summary          = '统计报表组件'
     
     # This description is used to generate tags and improve search results.
