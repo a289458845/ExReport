@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ExReport'
-    s.version          = '0.1.2'
+    s.version          = '0.1.3'
     s.summary          = '统计报表组件'
     
     # This description is used to generate tags and improve search results.
@@ -28,11 +28,11 @@ Pod::Spec.new do |s|
     s.source           = { :git => 'https://github.com/a289458845/ExReport.git', :tag => s.version.to_s }
     #s.public_header_files = 'ATCategory/Category/*.h'
     s.ios.deployment_target = '9.0'
-    #s.public_header_files = 'Pod/Classes/*.h'
+    s.public_header_files = 'Pod/Classes/*.h'
     s.source_files = 'ExReport/Classes/**/*'
-    
+    s.resource = 'ExReport/Assets/*.{png,xib}'
     s.resource_bundles = {
-        'ExReport' => ['ExReport/Assets/*.png','ExReport/Assets/*']
+        'ExReport' => ['ExReport/Assets/*.{png,xib}','ExReport/Assets/*']
     }
     s.prefix_header_contents = '#import "ExReport.h"'
     # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import <ExReport/ZWStatisticalReportsViewController.h>
 #import "ZWStatisticalReportsViewController.h"
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)getReginData;
 
+/// 获取rootVC
 -(ZWStatisticalReportsViewController *)goToBaseVC;
 @end
 
